@@ -3,7 +3,9 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
-#include "cpu_measurements.h"
+
+#include "procedure_call.h"
+#include "syscall.h"
 
 int main(int argc, char** argv) {
 

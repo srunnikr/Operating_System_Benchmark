@@ -9,7 +9,6 @@
 #define CPU_MEASUREMENTS_H
 
 // For measuring syscall overhead
-void measure_syscalls();
 void measure_procedure_0arg(int iterations);
 void measure_procedure_1arg(int iterations);
 void measure_procedure_2arg(int iterations);
