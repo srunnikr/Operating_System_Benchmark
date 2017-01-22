@@ -34,39 +34,318 @@ void __attribute__ ((noinline)) func7(int arg1, int arg2, int arg3, int arg4, in
 
 // End of procedure measurements
 
-void measure_procedure_0arg() {
+void measure_procedure_0arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func0();
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 0 ARGS : Average cycles = %ld\n", avg);
+}
+
+void measure_procedure_1arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func1(1);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 1 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_1arg() {
+void measure_procedure_2arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func2(1,2);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 2 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_2arg() {
+void measure_procedure_3arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func3(1,2,3);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 3 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_3arg() {
+void measure_procedure_4arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func4(1,2,3,4);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 4 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_4arg() {
+void measure_procedure_5arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func5(1,2,3,4,5);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 5 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_5arg() {
+void measure_procedure_6arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func6(1,2,3,4,5,6);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 6 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_6arg() {
+void measure_procedure_7arg(int iterations) {
+
+	uint32_t high1, low1, high2, low2;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+
+	for(uint64_t i = 0; i<iterations; ++i) {
+
+		// Note the start time, call kernel functions to disable preemption & interrupt here
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		 );
+
+		 func7(1,2,3,4,5,6,7);
+
+		 __asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 );
+
+		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		 ticks[i] = (tick2 - tick1);
+
+	}
+
+	uint64_t sum = 0;
+	for(int i=0; i<iterations; ++i) {
+		sum += ticks[i];
+	}
+
+	uint64_t avg = sum / iterations;
+	printf("FUNC 7 ARGS : Average cycles = %ld\n", avg);
 
 }
 
-void measure_procedure_7arg() {
-
-}
-
-void measure_syscalls() {
+void measure_syscalls(int iterations) {
 
     /*
     As per the x86 coding manual pg 1665, the higher order bits are stored into
@@ -75,10 +354,10 @@ void measure_syscalls() {
     uint32_t high1, low1, high2, low2;
     int i=0;
 
-    uint64_t ticks[1000];
-    memset(ticks, 0, 1000*sizeof(uint64_t));
+    uint64_t ticks[iterations];
+    memset(ticks, 0, iterations*sizeof(uint64_t));
 
-    for(i=0; i<1000; ++i) {
+    for(i=0; i<iterations; ++i) {
 
         // Call kernel module function that disables interrupts
         __asm__ volatile ("CPUID\n\t"
@@ -103,11 +382,11 @@ void measure_syscalls() {
     }
 
     uint64_t sum = 0;
-    for(int i=0; i<1000; ++i) {
+    for(int i=0; i<iterations; ++i) {
         sum += ticks[i];
     }
 
-    uint64_t avg = sum / 1000;
-    printf("Average cycles : %ld\n", avg);
+    uint64_t avg = sum / iterations;
+    printf("SYSCALLS : Average cycles = %ld\n", avg);
 
 }

@@ -5,18 +5,25 @@
 #include <string.h>
 #include "cpu_measurements.h"
 
-int main() {
+int main(int argc, char** argv) {
 
-    measure_syscalls();
+	if(argc != 2) {
+		printf("Error: Invoke by ./cpu <iterations>\n");
+		exit(1);
+	}
 
-    measure_procedure_0arg();
-    measure_procedure_1arg();
-    measure_procedure_2arg();
-    measure_procedure_3arg();
-    measure_procedure_4arg();
-    measure_procedure_5arg();
-    measure_procedure_6arg();
-    measure_procedure_7arg();
+	int iterations = atoi(argv[1]);
+
+    measure_syscalls(iterations);
+
+    measure_procedure_0arg(iterations);
+    measure_procedure_1arg(iterations);
+    measure_procedure_2arg(iterations);
+    measure_procedure_3arg(iterations);
+    measure_procedure_4arg(iterations);
+    measure_procedure_5arg(iterations);
+    measure_procedure_6arg(iterations);
+    measure_procedure_7arg(iterations);
 
     return 0;
 

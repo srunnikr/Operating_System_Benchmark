@@ -10,13 +10,13 @@
 
 // For measuring syscall overhead
 void measure_syscalls();
-void measure_procedure_0arg();
-void measure_procedure_1arg();
-void measure_procedure_2arg();
-void measure_procedure_3arg();
-void measure_procedure_4arg();
-void measure_procedure_5arg();
-void measure_procedure_6arg();
-void measure_procedure_7arg();
+void measure_procedure_0arg(int iterations);
+void measure_procedure_1arg(int iterations);
+void measure_procedure_2arg(int iterations);
+void measure_procedure_3arg(int iterations);
+void measure_procedure_4arg(int iterations);
+void measure_procedure_5arg(int iterations);
+void measure_procedure_6arg(int iterations);
+void measure_procedure_7arg(int iterations);
 
 #endif
