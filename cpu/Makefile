@@ -14,6 +14,7 @@ MAIN_SRC=main.c
 UTILS_SRC=utils.c
 
 all: run
+	mv run build
 
 run: syscall.o procedure_call.o main.o utils.o threads.o process.o
 	$(CC) $(FLAGS) -I$(INC_DIR) -o $(CPU_OUT) syscall.o procedure_call.o main.o utils.o threads.o process.o

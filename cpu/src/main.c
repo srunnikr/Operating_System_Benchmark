@@ -3,11 +3,16 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "procedure_call.h"
 #include "syscall.h"
 #include "threads.h"
 #include "process.h"
+#include "utils.h"
+
+// Make this true if you need to check CPU frequency
+#define CPU_FREQ_MEASUREMENT false
 
 int main(int argc, char** argv) {
 
@@ -17,6 +22,10 @@ int main(int argc, char** argv) {
 	}
 
 	int iterations = atoi(argv[1]);
+
+	if(CPU_FREQ_MEASUREMENT) {
+		measure_cpufreq();
+	}
 
     measure_syscalls(iterations);
 

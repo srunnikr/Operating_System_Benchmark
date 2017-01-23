@@ -7,6 +7,17 @@ OS performance benchmarking project for CSE 221 - Graduate operating systems cou
 # Instructions
 
 
+## Running experiment
+
+
+```
+./run.sh <Number of Iterations>
+```
+
+
+Alternatively if you want to manually do the building process and execution 
+follow the next steps
+
 ## Building
 
 ```
