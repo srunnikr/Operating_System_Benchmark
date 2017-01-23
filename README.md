@@ -13,7 +13,14 @@ OS performance benchmarking project for CSE 221 - Graduate operating systems cou
 cd cpu
 make
 ```
-
+## Running tests
+```
+./run <Number of Iterations>
+```
+Example
+```
+./run 100000
+```
 
 ## Clean
 

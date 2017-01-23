@@ -6,6 +6,8 @@
 
 #include "procedure_call.h"
 #include "syscall.h"
+#include "threads.h"
+#include "process.h"
 
 int main(int argc, char** argv) {
 
@@ -26,6 +28,10 @@ int main(int argc, char** argv) {
     measure_procedure_5arg(iterations);
     measure_procedure_6arg(iterations);
     measure_procedure_7arg(iterations);
+
+    measure_thread(iterations);
+
+    measure_process(iterations);
 
     return 0;
 
