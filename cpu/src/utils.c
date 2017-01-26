@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include "utils.h"
 
-uint64_t measure_cpufreq() {
+void measure_cpufreq() {
 
 	uint32_t high1, low1, high2, low2;
 	int iterations = 10;
@@ -20,30 +20,35 @@ uint64_t measure_cpufreq() {
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
 
-	printf("Measuring CPU frequency: this could take %ld s\n", (uint64_t)(iterations * sleep_time));
+	printf("Measuring CPU frequency: this could take %lld s\n", (uint64_t)(iterations * sleep_time));
 	printf("Iterations : %d sleepTime : %d\n", iterations, sleep_time);
 	for(int i=0; i< iterations; ++i) {
 		__asm__ volatile ("CPUID\n\t"
-		 "RDTSC\n\t"
-		 "mov %%edx, %0\n\t"
-		 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
-		);
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
+
 		sleep(2);
-		__asm__ volatile ("CPUID\n\t"
-		 "RDTSC\n\t"
-		 "mov %%edx, %0\n\t"
-		 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
-		);
+
+		__asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
 
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
 		ticks[i] = (tick2 - tick1);
-		printf("Iteration %d - Cycles = %ld\n", i, ticks[i]);
+		printf("Iteration %d - Cycles = %lld\n", i, ticks[i]);
 
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("CPU average cycles : %ld\n", (average / sleep_time));
+	printf("CPU average cycles : %lld\n", (average / sleep_time));
 
 }
 

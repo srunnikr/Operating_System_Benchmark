@@ -22,7 +22,7 @@
 
 #pragma optimize("", off)
 
-void __attribute__ ((noinline,optimize("-O0"))) func0() {}
+void __attribute__ ((noinline)) func0() {}
 void __attribute__ ((noinline)) func1(int arg1) {}
 void __attribute__ ((noinline)) func2(int arg1, int arg2) {}
 void __attribute__ ((noinline)) func3(int arg1, int arg2, int arg3) {}
@@ -48,14 +48,17 @@ void measure_procedure_0arg(int iterations) {
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func0();
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -70,7 +73,7 @@ void measure_procedure_0arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 0 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 0 ARGS : Average cycles = %lld\n", avg);
 }
 
 void measure_procedure_1arg(int iterations) {
@@ -82,18 +85,21 @@ void measure_procedure_1arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func1(1);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -108,7 +114,7 @@ void measure_procedure_1arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 1 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 1 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -121,18 +127,21 @@ void measure_procedure_2arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func2(1,2);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -147,7 +156,7 @@ void measure_procedure_2arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 2 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 2 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -160,18 +169,21 @@ void measure_procedure_3arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func3(1,2,3);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -186,7 +198,7 @@ void measure_procedure_3arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 3 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 3 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -199,18 +211,21 @@ void measure_procedure_4arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func4(1,2,3,4);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -225,7 +240,7 @@ void measure_procedure_4arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 4 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 4 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -238,18 +253,21 @@ void measure_procedure_5arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func5(1,2,3,4,5);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -264,7 +282,7 @@ void measure_procedure_5arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 5 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 5 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -277,19 +295,22 @@ void measure_procedure_6arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
+		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
 			 "mov %%edx, %0\n\t"
 			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func6(1,2,3,4,5,6);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
-		 );
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
+		);
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		 uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
@@ -303,7 +324,7 @@ void measure_procedure_6arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 6 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 6 ARGS : Average cycles = %lld\n", avg);
 
 }
 
@@ -316,18 +337,21 @@ void measure_procedure_7arg(int iterations) {
 	for(uint64_t i = 0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+		__asm__ volatile ("CPUID\n\t"
+			"RDTSC\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 func7(1,2,3,4,5,6,7);
 
-		 __asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
+		 __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
 		 uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -342,6 +366,6 @@ void measure_procedure_7arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 7 ARGS : Average cycles = %ld\n", avg);
+	printf("FUNC 7 ARGS : Average cycles = %lld\n", avg);
 
 }

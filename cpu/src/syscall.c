@@ -27,19 +27,22 @@ void measure_syscalls(int iterations) {
     for(i=0; i<iterations; ++i) {
 
         // Call kernel module function that disables interrupts
-        __asm__ volatile ("CPUID\n\t"
-            "RDTSC\n\t"
-            "mov %%edx, %0\n\t"
-            "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
-        );
+    	__asm__ volatile ("CPUID\n\t"
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
 
         getpid();
 
-        __asm__ volatile ("CPUID\n\t"
-            "RDTSC\n\t"
-            "mov %%edx, %0\n\t"
-            "mov %%eax, %1\n\t": "=r" (high2), "=r" (low2)
-        );
+        __asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
         // Call kernel module funtion that enables interrupts
 
         uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -54,6 +57,6 @@ void measure_syscalls(int iterations) {
     }
 
     uint64_t avg = sum / iterations;
-    printf("SYSCALLS : Average cycles = %ld\n", avg);
+    printf("SYSCALLS : Average cycles = %lld\n", avg);
 
 }

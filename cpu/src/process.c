@@ -24,10 +24,11 @@ void measure_process(int iterations) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
 		__asm__ volatile ("CPUID\n\t"
-		 "RDTSC\n\t"
-		 "mov %%edx, %0\n\t"
-		 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
-		);
+			 "RDTSC\n\t"
+			 "mov %%edx, %0\n\t"
+			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+			 :: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
 
 		pid_t id = fork();
 
@@ -40,11 +41,13 @@ void measure_process(int iterations) {
 			exit(-1);
 		} else {
 			wait(NULL);
-			__asm__ volatile ("CPUID\n\t"
-			 "RDTSC\n\t"
-			 "mov %%edx, %0\n\t"
-			 "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
-			);
+			__asm__ volatile ("rdtscp\n\t"
+				"mov %%edx, %0\n\t"
+				"mov %%eax, %1\n\t"
+				"cpuid\n\t"
+				: "=r" (high2), "=r" (low2)
+				:: "%rax", "%rbx", "%rcx", "%rdx"
+			 );
 
 			uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 			uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
@@ -55,6 +58,6 @@ void measure_process(int iterations) {
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("PROCESS : Average cycles = %ld\n", average);
+	printf("PROCESS : Average cycles = %lld\n", average);
 
 }

@@ -9,7 +9,7 @@
 #define UTILS_H_
 #include <stdint.h>
 
-uint64_t measure_cpufreq();
+void measure_cpufreq();
 uint64_t calc_average(uint64_t* ticks, int iterations);
 
 #endif /* UTILS_H_ */
