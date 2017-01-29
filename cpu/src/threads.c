@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 #include "utils.h"
 #include "threads.h"
 
@@ -56,7 +57,7 @@ void measure_thread(int iterations) {
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("THREAD : Average cycles = %lld\n", average);
+	printf("THREAD : Average cycles = %"PRIu64"\n", average);
 
 }
 

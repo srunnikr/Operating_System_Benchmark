@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <inttypes.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "process.h"
@@ -58,6 +59,6 @@ void measure_process(int iterations) {
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("PROCESS : Average cycles = %lld\n", average);
+	printf("PROCESS : Average cycles = %"PRIu64"\n", average);
 
 }

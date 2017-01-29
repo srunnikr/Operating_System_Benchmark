@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <inttypes.h>
 #include "syscall.h"
 
 void measure_syscalls(int iterations) {
@@ -57,6 +58,6 @@ void measure_syscalls(int iterations) {
     }
 
     uint64_t avg = sum / iterations;
-    printf("SYSCALLS : Average cycles = %lld\n", avg);
+    printf("SYSCALLS : Average cycles = %"PRIu64"\n", avg);
 
 }

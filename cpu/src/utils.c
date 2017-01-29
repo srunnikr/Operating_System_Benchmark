@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
+#include <inttypes.h>
 #include "utils.h"
 
 void measure_cpufreq() {
@@ -20,7 +21,7 @@ void measure_cpufreq() {
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
 
-	printf("Measuring CPU frequency: this could take %lld s\n", (uint64_t)(iterations * sleep_time));
+	printf("Measuring CPU frequency: this could take %"PRIu64" s\n", (uint64_t)(iterations * sleep_time));
 	printf("Iterations : %d sleepTime : %d\n", iterations, sleep_time);
 	for(int i=0; i< iterations; ++i) {
 		__asm__ volatile ("CPUID\n\t"
@@ -43,12 +44,12 @@ void measure_cpufreq() {
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
 		ticks[i] = (tick2 - tick1);
-		printf("Iteration %d - Cycles = %lld\n", i, ticks[i]);
+		printf("Iteration %d - Cycles = %"PRIu64"\n", i, ticks[i]);
 
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("CPU average cycles : %lld\n", (average / sleep_time));
+	printf("CPU average cycles : %"PRIu64"\n", (average / sleep_time));
 
 }
 

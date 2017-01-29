@@ -19,7 +19,8 @@ echo "Staring experiment"
 echo "==========================="
 echo ""
 
-./build/run $1
+# Run experiment solely on core 0
+taskset -c 0 ./build/run $1
 
 echo ""
 echo "==========================="

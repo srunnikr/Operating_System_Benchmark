@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <inttypes.h>
 #include <unistd.h>
 
 /* Prototypes for procedure calls
@@ -73,7 +74,7 @@ void measure_procedure_0arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 0 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 0 ARGS : Average cycles = %"PRIu64"\n", avg);
 }
 
 void measure_procedure_1arg(int iterations) {
@@ -114,7 +115,7 @@ void measure_procedure_1arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 1 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 1 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -156,7 +157,7 @@ void measure_procedure_2arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 2 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 2 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -198,7 +199,7 @@ void measure_procedure_3arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 3 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 3 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -240,7 +241,7 @@ void measure_procedure_4arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 4 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 4 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -282,7 +283,7 @@ void measure_procedure_5arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 5 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 5 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -324,7 +325,7 @@ void measure_procedure_6arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 6 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 6 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
 
@@ -366,6 +367,6 @@ void measure_procedure_7arg(int iterations) {
 	}
 
 	uint64_t avg = sum / iterations;
-	printf("FUNC 7 ARGS : Average cycles = %lld\n", avg);
+	printf("FUNC 7 ARGS : Average cycles = %"PRIu64"\n", avg);
 
 }
