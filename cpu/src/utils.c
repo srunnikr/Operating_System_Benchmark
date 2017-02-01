@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 #include <inttypes.h>
 #include "utils.h"
 
@@ -50,6 +51,46 @@ void measure_cpufreq() {
 
 	uint64_t average = calc_average(ticks, iterations);
 	printf("CPU average cycles : %"PRIu64"\n", (average / sleep_time));
+
+}
+
+double_t calc_timeread_overhead(uint64_t iterations) {
+
+	// Function to measure the overhead of RDTSC instruction
+	uint64_t total = 0, start, stop;
+	double_t average;
+
+	for (uint64_t i = 0; i<iterations; ++i) {
+		start = start_rtdsc();
+		stop = stop_rtdscp();
+		total += (stop - start);
+	}
+
+	average = (double_t) total / (double_t) iterations;
+
+	printf("Time read overhead : %f\n", ((double_t)total/ (double_t)iterations));
+
+	return average;
+
+}
+
+double calc_loop_overhead(uint64_t iterations) {
+
+	// Function to measure overhead of a loop
+	uint64_t total = 0, start, stop;
+	double average;
+
+	start = start_rtdsc();
+	for (uint64_t i = 0; i<iterations; ++i) {
+	}
+	stop = stop_rtdscp();
+	total += (stop - start);
+
+	average = (double_t) total / (double_t) iterations;
+
+	printf("Loop overhead : %f\n", ((double_t)total/ (double_t)iterations));
+
+	return average;
 
 }
 

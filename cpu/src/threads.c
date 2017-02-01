@@ -15,18 +15,19 @@
 /* Function invoked for thread performance measurements
  * Just returns
  */
-void* thread_function(void* id) {
+void* thread_function() {
 	pthread_exit(NULL);
 }
 
 void measure_thread(int iterations) {
 
+	// measure both, including time for start of the functioning; similar to fork
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
 
 	pthread_t thread;
-	long arg;
+
 	for(int i=0; i<iterations; ++i) {
 
 		// Note the start time, call kernel functions to disable preemption & interrupt here
@@ -37,7 +38,7 @@ void measure_thread(int iterations) {
 			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
-		pthread_create(&thread, NULL, thread_function, (void *)arg);
+		pthread_create(&thread, NULL, thread_function, NULL);
 
 		__asm__ volatile ("rdtscp\n\t"
 			"mov %%edx, %0\n\t"

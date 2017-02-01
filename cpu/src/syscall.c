@@ -13,6 +13,10 @@
 #include <inttypes.h>
 #include "syscall.h"
 
+/*
+ * Directly call system call _syscall(), system call directly from user space
+ * */
+
 void measure_syscalls(int iterations) {
 
     /*
@@ -57,7 +61,7 @@ void measure_syscalls(int iterations) {
         sum += ticks[i];
     }
 
-    uint64_t avg = sum / iterations;
-    printf("SYSCALLS : Average cycles = %"PRIu64"\n", avg);
+    double avg = (double) sum / (double) iterations;
+    printf("SYSCALLS : Average cycles = %f\n", avg);
 
 }

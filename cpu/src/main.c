@@ -27,6 +27,9 @@ int main(int argc, char** argv) {
 		measure_cpufreq();
 	}
 
+    calc_timeread_overhead(iterations);
+    calc_loop_overhead(iterations);
+
     measure_syscalls(iterations);
 
     measure_procedure_0arg(iterations);

@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS=-Wall -Wno-unknown-pragmas -pthread
+FLAGS=-Wall -Wno-unknown-pragmas -pthread -lm
 CPU_OUT=run
 
 SRC_DIR=src
@@ -22,22 +22,22 @@ run: syscall.o procedure_call.o main.o utils.o threads.o process.o
 	mv *.o $(BUILD_DIR)
 	
 syscall.o: $(addprefix $(SRC_DIR)/, $(SYSCALL_SRC))
-	$(CC) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(SYSCALL_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(SYSCALL_SRC))
 	
 procedure_call.o: $(addprefix $(SRC_DIR)/, $(PROCEDURE_SRC))
-	$(CC) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(PROCEDURE_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(PROCEDURE_SRC))
 	
 threads.o: $(addprefix $(SRC_DIR)/, $(THREADS_SRC))
-	$(CC) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(THREADS_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(THREADS_SRC))
 	
 process.o: $(addprefix $(SRC_DIR)/, $(PROCESS_SRC))
-	$(CC) -c -I$(INC_DIR)  $(addprefix $(SRC_DIR)/, $(PROCESS_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR)  $(addprefix $(SRC_DIR)/, $(PROCESS_SRC))
 	
 main.o: $(addprefix $(SRC_DIR)/, $(MAIN_SRC))
-	$(CC) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(MAIN_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(MAIN_SRC))
 	
 utils.o: $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
-	$(CC) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
+	$(CC) $(FLAGS) -c -I$(INC_DIR) $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
 
 clean:
 	rm -rf $(CPU_OUT) *.o *.gch
