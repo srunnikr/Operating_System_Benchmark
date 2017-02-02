@@ -50,7 +50,7 @@ void measure_cpufreq() {
 	}
 
 	uint64_t average = calc_average(ticks, iterations);
-	printf("CPU average cycles : %"PRIu64"\n", (average / sleep_time));
+	printf("CPU average cycles : %"PRIu64"\n\n", (average / sleep_time));
 
 }
 
@@ -94,7 +94,7 @@ double_t calc_timeread_overhead(uint64_t iterations) {
 
 	//average = (double_t) total / (double_t) iterations;
     average = calc_average(ticks, iterations);
-    printf("Time read overhead : %f\n", average);
+    printf("Time read overhead : %f\n\n", average);
 
     fprintf(fp, "%f", average);
     fclose(fp);
@@ -141,7 +141,7 @@ double calc_loop_overhead(uint64_t iterations) {
     fprintf(fp, "%f", average);
     fclose(fp);
 
-	printf("Loop overhead : %f\n", average);
+	printf("Loop overhead : %f\n\n", average);
 
 	return average;
 
@@ -149,10 +149,13 @@ double calc_loop_overhead(uint64_t iterations) {
 
 uint64_t calc_average(uint64_t* ticks, int iterations) {
 
-	uint64_t average = 0;
+	uint64_t mean = 0;
+    double variance = 0, sd = 0;
+
+    int iter = iterations;
 
 	uint64_t sum = 0;
-	for(int i=0; i<iterations; ++i) {
+	for(int i=0; i<iter; ++i) {
         if (i > 0 && (ticks[i] - ticks[i-1]) > 100) {
             iterations -= 1;
             continue;
@@ -160,8 +163,20 @@ uint64_t calc_average(uint64_t* ticks, int iterations) {
 		sum += ticks[i];
 	}
 
-	average = sum / iterations;
+    mean = sum / iterations;
 
-	return average;
+    for(int i=0; i<iter; ++i) {
+        if (i > 0 && (ticks[i] - ticks[i-1]) > 100) {
+            continue;
+        }
+        variance += pow((double)abs((mean - ticks[i])), 2);
+    }
+
+    variance = variance / iterations;
+    sd = sqrt (variance);
+
+    printf("Variance : %f, Standard Deviation : %f\n", variance, sd);
+
+	return mean;
 
 }
