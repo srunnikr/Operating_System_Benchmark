@@ -42,3 +42,4 @@ utils.o: $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
 clean:
 	rm -rf $(CPU_OUT) *.o *.gch
 	rm -rf $(BUILD_DIR)
+	rm -rf logs/*

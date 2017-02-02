@@ -57,18 +57,47 @@ void measure_cpufreq() {
 double_t calc_timeread_overhead(uint64_t iterations) {
 
 	// Function to measure the overhead of RDTSC instruction
+    uint32_t high1, low1, high2, low2;
 	uint64_t total = 0, start, stop;
 	double_t average;
+    uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+    memset(ticks, 0, iterations * sizeof(uint64_t));
+    FILE* fp = fopen("logs/time_overhead.txt", "w+");
 
 	for (uint64_t i = 0; i<iterations; ++i) {
-		start = start_rtdsc();
-		stop = stop_rtdscp();
-		total += (stop - start);
+
+        __asm__ __volatile__(
+            "CPUID\n\t"
+            "RDTSC\n\t"
+            "mov %%edx, %0\n\t"
+            "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+            :: "%rax", "%rbx", "%rcx", "%rdx"
+        );
+
+        __asm__ __volatile__(
+            "RDTSCP\n\t"
+            "mov %%edx, %0\n\t"
+            "mov %%eax, %1\n\t"
+            "CPUID\n\t": "=r" (high2), "=r" (low2)
+            :: "%rax", "%rbx", "%rcx", "%rdx"
+        );
+
+        start = (((uint64_t)high1 << 32) | low1);
+        stop = (((uint64_t)high2 << 32) | low2);
+        ticks[i] = stop - start;
 	}
 
-	average = (double_t) total / (double_t) iterations;
+    for(int i=0; i<iterations; ++i) {
+        total += ticks[i];
+        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+    }
 
-	printf("Time read overhead : %f\n", ((double_t)total/ (double_t)iterations));
+	//average = (double_t) total / (double_t) iterations;
+    average = calc_average(ticks, iterations);
+    printf("Time read overhead : %f\n", average);
+
+    fprintf(fp, "%f", average);
+    fclose(fp);
 
 	return average;
 
@@ -77,18 +106,42 @@ double_t calc_timeread_overhead(uint64_t iterations) {
 double calc_loop_overhead(uint64_t iterations) {
 
 	// Function to measure overhead of a loop
+    uint32_t high1, low1, high2, low2;
 	uint64_t total = 0, start, stop;
+    FILE* fp = fopen("logs/loop_overhead.txt", "w+");
 	double average;
 
-	start = start_rtdsc();
+    __asm__ __volatile__(
+        "CPUID\n\t"
+        "RDTSC\n\t"
+        "mov %%edx, %0\n\t"
+        "mov %%eax, %1\n\t": "=r" (high1), "=r" (low1)
+        :: "%rax", "%rbx", "%rcx", "%rdx"
+    );
+
 	for (uint64_t i = 0; i<iterations; ++i) {
 	}
-	stop = stop_rtdscp();
+
+    __asm__ __volatile__(
+        "RDTSCP\n\t"
+        "mov %%edx, %0\n\t"
+        "mov %%eax, %1\n\t"
+        "CPUID\n\t": "=r" (high2), "=r" (low2)
+        :: "%rax", "%rbx", "%rcx", "%rdx"
+    );
+
+    start = (((uint64_t)high1 << 32) | low1);
+    stop = (((uint64_t)high2 << 32) | low2);
+
 	total += (stop - start);
+    fprintf(fp, "%"PRIu64"\n", total);
 
 	average = (double_t) total / (double_t) iterations;
 
-	printf("Loop overhead : %f\n", ((double_t)total/ (double_t)iterations));
+    fprintf(fp, "%f", average);
+    fclose(fp);
+
+	printf("Loop overhead : %f\n", average);
 
 	return average;
 
@@ -100,6 +153,10 @@ uint64_t calc_average(uint64_t* ticks, int iterations) {
 
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
+        if (i > 0 && (ticks[i] - ticks[i-1]) > 100) {
+            iterations -= 1;
+            continue;
+        }
 		sum += ticks[i];
 	}
 
