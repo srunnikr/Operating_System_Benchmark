@@ -59,6 +59,8 @@ void measure_thread(int iterations) {
 
 	uint64_t average = calc_average(ticks, iterations);
 	printf("THREAD : Average cycles = %"PRIu64"\n\n", average);
+	
+	free(ticks);
 
 }
 

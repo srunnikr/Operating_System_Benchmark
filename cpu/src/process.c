@@ -61,4 +61,5 @@ void measure_process(int iterations) {
 	uint64_t average = calc_average(ticks, iterations);
 	printf("PROCESS : Average cycles = %"PRIu64"\n\n", average);
 
+	free(ticks);
 }

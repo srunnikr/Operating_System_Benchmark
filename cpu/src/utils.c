@@ -52,6 +52,7 @@ void measure_cpufreq() {
 	uint64_t average = calc_average(ticks, iterations);
 	printf("CPU average cycles : %"PRIu64"\n\n", (average / sleep_time));
 
+	free(ticks);
 }
 
 double_t calc_timeread_overhead(uint64_t iterations) {
@@ -98,6 +99,8 @@ double_t calc_timeread_overhead(uint64_t iterations) {
 
     fprintf(fp, "%f", average);
     fclose(fp);
+
+	free(ticks);
 
 	return average;
 

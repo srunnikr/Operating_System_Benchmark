@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS=-Wall -Wno-unknown-pragmas
+FLAGS=-g -Wall -Wno-unknown-pragmas
 LIBS = -lm -pthread
 CPU_OUT=run
 

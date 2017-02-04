@@ -96,6 +96,7 @@ void measure_procedure_0arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -147,6 +148,7 @@ void measure_procedure_1arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -198,6 +200,7 @@ void measure_procedure_2arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -249,6 +252,7 @@ void measure_procedure_3arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -300,6 +304,7 @@ void measure_procedure_4arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -402,6 +407,7 @@ void measure_procedure_6arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
 
@@ -453,5 +459,6 @@ void measure_procedure_7arg(int iterations) {
 
     fprintf(fp, "%f", avg);
     fclose(fp);
+	free(ticks);
 
 }
