@@ -16,6 +16,8 @@ UTILS_SRC=utils.c
 
 all: run
 	mv run build
+	mkdir build/logs
+	mkdir logs
 
 run: syscall.o procedure_call.o main.o utils.o threads.o process.o
 	$(CC) $(FLAGS) -I$(INC_DIR) -o $(CPU_OUT) syscall.o procedure_call.o main.o utils.o threads.o process.o $(LIBS)
@@ -43,4 +45,4 @@ utils.o: $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
 clean:
 	rm -rf $(CPU_OUT) *.o *.gch
 	rm -rf $(BUILD_DIR)
-	rm -rf logs/*
+	rm -rf logs
