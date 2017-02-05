@@ -155,11 +155,11 @@ double calc_loop_overhead(uint64_t iterations) {
 
 /* Parameters:
  * min:	lower bound; values smaller than min will be disgarded,
- *		if there is no need to set lower bound, set it to (-1).
+ *      if there is no need to set lower bound, set it to (-1).
  * max: upper bound; values greater than max will be disgarded,
- *		if there is no need to set upper bound, set it to (-1).
+ *      if there is no need to set upper bound, set it to (-1).
  * diff:difference bound; adjacent difference greater than diff will be disgarded,
- *		if there is no need to set difference, set it to (-1).
+ *      if there is no need to set difference, set it to (-1).
  */
 uint64_t calc_average(uint64_t* ticks,	// ticks array 
 					  int iterations,	// times of iterations
@@ -169,7 +169,7 @@ uint64_t calc_average(uint64_t* ticks,	// ticks array
 					  ){
 
 	uint64_t mean = 0;
-    double variance = 0, sd = 0;
+	double variance = 0, sd = 0;
 
 	int count1 = 0;
 	int count2 = 0;
