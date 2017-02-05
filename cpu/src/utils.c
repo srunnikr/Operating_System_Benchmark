@@ -3,6 +3,9 @@
  *
  *  Created on: Jan 22, 2017
  *      Author: sreejith
+ *
+ *  Last Revision: Feb 4, 2017
+ *		Editor: Huan Zhou
  */
 
 #include <stdlib.h>
@@ -49,7 +52,7 @@ void measure_cpufreq() {
 
 	}
 
-	uint64_t average = calc_average(ticks, iterations);
+	uint64_t average = calc_average(ticks, iterations, -1, -1, 100);
 	printf("CPU average cycles : %"PRIu64"\n\n", (average / sleep_time));
 
 	free(ticks);
@@ -94,7 +97,7 @@ double_t calc_timeread_overhead(uint64_t iterations) {
     }
 
 	//average = (double_t) total / (double_t) iterations;
-    average = calc_average(ticks, iterations);
+    average = calc_average(ticks, iterations, -1, -1, 100);
     printf("Time read overhead : %f\n\n", average);
 
     fprintf(fp, "%f", average);
@@ -150,32 +153,53 @@ double calc_loop_overhead(uint64_t iterations) {
 
 }
 
-uint64_t calc_average(uint64_t* ticks, int iterations) {
+/* Parameters:
+ * min:	lower bound; values smaller than min will be disgarded,
+ *		if there is no need to set lower bound, set it to (-1).
+ * max: upper bound; values greater than max will be disgarded,
+ *		if there is no need to set upper bound, set it to (-1).
+ * diff:difference bound; adjacent difference greater than diff will be disgarded,
+ *		if there is no need to set difference, set it to (-1).
+ */
+uint64_t calc_average(uint64_t* ticks,	// ticks array 
+					  int iterations,	// times of iterations
+					  int min,			// lower bound of cycles
+					  int max,			// uppder bound of cycles
+					  int diff			// difference bound of two adjacent value
+					  ){
 
 	uint64_t mean = 0;
     double variance = 0, sd = 0;
 
-    int iter = iterations;
+	int count1 = 0;
+	int count2 = 0;
 
 	uint64_t sum = 0;
-	for(int i=0; i<iter; ++i) {
-        if (i > 0 && (ticks[i] - ticks[i-1]) > 100) {
-            iterations -= 1;
+	for(int i = 1; i < iterations; ++i) {
+		if ((diff >= 0 ? abs(ticks[i] - ticks[i-1]) <= diff : 1) && 
+			(min >= 0 ? ticks[i] >= min : 1) &&
+			(max >= 0 ? ticks[i] <= max : 1)) {
+            count1 += 1;
+			sum += ticks[i];
             continue;
         }
-		sum += ticks[i];
+		ticks[i] = 0;
 	}
 
-    mean = sum / iterations;
+    mean = sum / count1;
 
-    for(int i=0; i<iter; ++i) {
-        if (i > 0 && (ticks[i] - ticks[i-1]) > 100) {
-            continue;
-        }
-        variance += pow((double)abs((mean - ticks[i])), 2);
+    for(int i = 1; i < iterations; ++i) {
+		if (ticks[i] > 0) {
+			variance += pow((double)abs((mean - ticks[i])), 2);
+			count2 += 1;
+		}
     }
-
-    variance = variance / iterations;
+	
+	if (count1 != count2) {
+		printf("something going wrong with count?\n");
+	}
+				
+    variance = variance / count1;
     sd = sqrt (variance);
 
     printf("Variance : %f, Standard Deviation : %f\n", variance, sd);

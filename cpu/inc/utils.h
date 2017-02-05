@@ -11,7 +11,7 @@
 #include <math.h>
 
 void measure_cpufreq();
-uint64_t calc_average(uint64_t* ticks, int iterations);
+uint64_t calc_average(uint64_t* ticks, int iterations, int min, int max, int diff);
 
 double_t calc_timeread_overhead(uint64_t iterations);
 double_t calc_loop_overhead(uint64_t iterations);
