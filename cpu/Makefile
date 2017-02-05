@@ -16,6 +16,8 @@ UTILS_SRC=utils.c
 
 all: run
 	mv run build
+	rm -rf build/logs
+	rm -rf logs
 	mkdir build/logs
 	mkdir logs
 
