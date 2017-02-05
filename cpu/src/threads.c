@@ -39,6 +39,7 @@ void measure_thread(int iterations) {
 			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
+		// test thread creation time
 		pthread_create(&thread, NULL, thread_function, NULL);
 
 		__asm__ volatile ("rdtscp\n\t"
@@ -63,8 +64,11 @@ void measure_thread(int iterations) {
     }
 
 	uint64_t average = calc_average(ticks, iterations, 1000, 10000, 4000);
-	printf("THREAD : Average cycles = %"PRIu64"\n\n", average);
-	
+	printf("THREAD_CREATION : Average cycles = %"PRIu64"\n\n", average);
+
+	fflush(NULL);	// flush everything in the buffer, otherwise other threads
+					// will share the same buffer, which may go wrong in redirection
+
 	fclose(fp);
 	free(ticks);
 }
