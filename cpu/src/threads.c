@@ -25,6 +25,7 @@ void measure_thread(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
+    FILE* fp = fopen("logs/thread_creation.txt", "w+");
 
 	pthread_t thread;
 
@@ -57,10 +58,14 @@ void measure_thread(int iterations) {
 
 	}
 
-	uint64_t average = calc_average(ticks, iterations);
+    for(int i=0; i<iterations; ++i) {
+        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+    }
+
+	uint64_t average = calc_average(ticks, iterations, -1, -1, 100);
 	printf("THREAD : Average cycles = %"PRIu64"\n\n", average);
 	
+	fclose(fp);
 	free(ticks);
-
 }
 

@@ -65,7 +65,7 @@ void measure_syscalls(int iterations) {
     }
 
     //double avg = (double) sum / (double) iterations;
-    double avg = calc_average(ticks, iterations);
+    double avg = calc_average(ticks, iterations, -1, -1, 100);
     printf("SYSCALLS : Average cycles = %f\n\n", avg);
 
 }
