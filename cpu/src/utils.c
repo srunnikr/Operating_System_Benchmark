@@ -166,43 +166,43 @@ uint64_t calc_average(uint64_t* ticks,	// ticks array
 					  int min,			// lower bound of cycles
 					  int max,			// uppder bound of cycles
 					  int diff			// difference bound of two adjacent value
-					  ){
+					  ) {
 
 	uint64_t mean = 0;
 	double variance = 0, sd = 0;
 
-	int count1 = 0;
-	int count2 = 0;
+	int count = 0;
 
 	uint64_t sum = 0;
 	for(int i = 1; i < iterations; ++i) {
 		if ((diff >= 0 ? abs(ticks[i] - ticks[i-1]) <= diff : 1) && 
 			(min >= 0 ? ticks[i] >= min : 1) &&
 			(max >= 0 ? ticks[i] <= max : 1)) {
-            count1 += 1;
+            count += 1;
 			sum += ticks[i];
             continue;
         }
-		ticks[i] = 0;
 	}
 
-    mean = sum / count1;
+	if (count == 0) {
+		printf("iteration = %d but count = 0! Please reset the bounds\n", iterations);
+		exit(1);
+	}
+    
+	mean = sum / count;
 
     for(int i = 1; i < iterations; ++i) {
-		if (ticks[i] > 0) {
+		if ((diff >= 0 ? abs(ticks[i] - ticks[i-1]) <= diff : 1) && 
+			(min >= 0 ? ticks[i] >= min : 1) &&
+			(max >= 0 ? ticks[i] <= max : 1)) {
 			variance += pow((double)abs((mean - ticks[i])), 2);
-			count2 += 1;
 		}
     }
 	
-	if (count1 != count2) {
-		printf("something going wrong with count?\n");
-	}
-				
-    variance = variance / count1;
+    variance = variance / count;
     sd = sqrt (variance);
 
-    printf("Variance : %f, Standard Deviation : %f\n", variance, sd);
+    printf("Count : %d, Variance : %f, Standard Deviation : %f\n", count, variance, sd);
 
 	return mean;
 
