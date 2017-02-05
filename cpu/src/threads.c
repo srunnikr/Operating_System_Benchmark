@@ -62,7 +62,7 @@ void measure_thread(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
-	uint64_t average = calc_average(ticks, iterations, -1, -1, 100);
+	uint64_t average = calc_average(ticks, iterations, 1000, 10000, 4000);
 	printf("THREAD : Average cycles = %"PRIu64"\n\n", average);
 	
 	fclose(fp);
