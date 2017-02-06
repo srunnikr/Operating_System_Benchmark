@@ -41,11 +41,11 @@ int main(int argc, char** argv) {
     measure_procedure_6arg(iterations);
     measure_procedure_7arg(iterations);
 
-    measure_thread_creation(iterations);
-    measure_thread_switch(iterations);
-
     measure_process_creation(iterations);
     measure_process_switch(iterations);
+
+    measure_thread_creation(iterations);
+    measure_thread_switch(iterations);
 
     return 0;
 

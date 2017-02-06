@@ -10,7 +10,7 @@ echo "==========================="
 echo ""
 
 # Run experiment solely on core 0
-sudo taskset -c 0 nice -n -20 ./build/run $1
+taskset -c 0 nice -n -20 ./build/run $1
 
 echo ""
 echo "==========================="
