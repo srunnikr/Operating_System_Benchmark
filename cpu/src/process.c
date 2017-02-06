@@ -46,12 +46,11 @@ void measure_process_creation(int iterations) {
 		 );
 
 		if(pid == 0) {
-			exit(-1);
+			exit(0);
 		} 
 
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
-		//TODO: Need to calculate overhead and subtract here?
 		ticks[i] = (tick2 - tick1);
 
 	}
@@ -60,8 +59,10 @@ void measure_process_creation(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
-	uint64_t average = calc_average(ticks, iterations, 100000, 500000, 100000);
+	uint64_t average = calc_average(ticks, iterations, 0, 200000, 50000);
 	printf("PROCESS_CREATION : Average cycles = %"PRIu64"\n\n", average);
+	
+	fflush(NULL);
 
 	fclose(fp);
 	free(ticks);
@@ -74,11 +75,14 @@ void measure_process_switch(int iterations) {
 	memset(ticks, 0, iterations * sizeof(uint64_t));
 	FILE* fp = fopen("logs/process_switch.txt","w+");
 
+	int fd[2];
+	if(pipe(fd) != 0) {
+		printf("fail to create pipe in process switch!\n");
+		exit(1);
+	}
+		
 	for(int i=0; i<iterations; ++i) {
 
-		int fd[2];
-		pipe(fd);
-		
 		pid_t pid;
 
 		if((pid = fork()) != 0) {
@@ -98,8 +102,10 @@ void measure_process_switch(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
-	uint64_t average = calc_average(ticks, iterations, 0, -1, -1 );
+	uint64_t average = calc_average(ticks, iterations, 0, 300000, 50000);
 	printf("PROCESS_SWITCH : Average cycles = %"PRIu64"\n\n", average);
+
+	fflush(NULL);
 
 	fclose(fp);
 	free(ticks);
