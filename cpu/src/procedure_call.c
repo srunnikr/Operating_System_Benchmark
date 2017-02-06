@@ -95,6 +95,7 @@ void measure_procedure_0arg(int iterations) {
     printf("FUNC 0 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
@@ -147,6 +148,7 @@ void measure_procedure_1arg(int iterations) {
     printf("FUNC 1 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
@@ -199,6 +201,7 @@ void measure_procedure_2arg(int iterations) {
     printf("FUNC 2 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
@@ -251,6 +254,7 @@ void measure_procedure_3arg(int iterations) {
     printf("FUNC 3 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
@@ -303,8 +307,9 @@ void measure_procedure_4arg(int iterations) {
 	printf("FUNC 4 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
-    fclose(fp);
+	fflush(NULL);
 	free(ticks);
+    fclose(fp);
 
 }
 
@@ -355,6 +360,8 @@ void measure_procedure_5arg(int iterations) {
 	printf("FUNC 5 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
+	free(ticks);
     fclose(fp);
 
 }
@@ -406,6 +413,7 @@ void measure_procedure_6arg(int iterations) {
 	printf("FUNC 6 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
@@ -458,6 +466,7 @@ void measure_procedure_7arg(int iterations) {
     printf("FUNC 7 ARGS : Average cycles = %f\n\n", avg);
 
     fprintf(fp, "%f", avg);
+	fflush(NULL);
     fclose(fp);
 	free(ticks);
 
