@@ -19,7 +19,7 @@ void* thread_function() {
 	pthread_exit(NULL);
 }
 
-void measure_thread(int iterations) {
+void measure_thread_creation(int iterations) {
 
 	// measure both, including time for start of the functioning; similar to fork
 	uint32_t high1, low1, high2, low2;
@@ -63,7 +63,7 @@ void measure_thread(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
-	uint64_t average = calc_average(ticks, iterations, 1000, 10000, 4000);
+	uint64_t average = calc_average(ticks, iterations, 1000, 10000, 5000);
 	printf("THREAD_CREATION : Average cycles = %"PRIu64"\n\n", average);
 
 	fflush(NULL);	// flush everything in the buffer, otherwise other threads
@@ -73,3 +73,5 @@ void measure_thread(int iterations) {
 	free(ticks);
 }
 
+void measure_thread_contextswitch(int iterations) {
+}

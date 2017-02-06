@@ -3,6 +3,9 @@
  *
  *  Created on: Jan 22, 2017
  *      Author: sreejith
+ *
+ *  Last Revision: Feb 5, 2017
+ *		Editor: Huan Zhou
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,11 +18,12 @@
 #include "process.h"
 #include "utils.h"
 
-void measure_process(int iterations) {
-
+void measure_process_creation(int iterations) {
+	
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
+	FILE* fp = fopen("logs/process_creation.txt","w+");
 
 	for(int i=0; i<iterations; ++i) {
 
@@ -31,35 +35,37 @@ void measure_process(int iterations) {
 			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
-		pid_t id = fork();
+		pid_t pid = fork();
 
-		if(id < 0) {
-			printf("ERROR: fork failed\n");
+		__asm__ volatile ("rdtscp\n\t"
+			"mov %%edx, %0\n\t"
+			"mov %%eax, %1\n\t"
+			"cpuid\n\t"
+			: "=r" (high2), "=r" (low2)
+			:: "%rax", "%rbx", "%rcx", "%rdx"
+		 );
+
+		if(pid == 0) {
 			exit(-1);
-		}
+		} 
 
-		if(id == 0) {
-			exit(-1);
-		} else {
-			wait(NULL);
-			__asm__ volatile ("rdtscp\n\t"
-				"mov %%edx, %0\n\t"
-				"mov %%eax, %1\n\t"
-				"cpuid\n\t"
-				: "=r" (high2), "=r" (low2)
-				:: "%rax", "%rbx", "%rcx", "%rdx"
-			 );
-
-			uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
-			uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
-			//TODO: Need to calculate overhead and subtract here?
-			ticks[i] = (tick2 - tick1);
-		}
+		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
+		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
+		//TODO: Need to calculate overhead and subtract here?
+		ticks[i] = (tick2 - tick1);
 
 	}
 
-	uint64_t average = calc_average(ticks, iterations, -1, -1, 100);
+	for(int i=0; i<iterations; ++i) {
+        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+	}
+
+	uint64_t average = calc_average(ticks, iterations, 100000, 500000, 100000);
 	printf("PROCESS : Average cycles = %"PRIu64"\n\n", average);
 
+	fclose(fp);
 	free(ticks);
+}
+
+void measure_process_contextswitch(int iterations) {
 }
