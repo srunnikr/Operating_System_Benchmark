@@ -45,7 +45,11 @@ void measure_process_creation(int iterations) {
 			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
-		if(pid == 0) {
+		if(pid == -1) {
+			printf("fail to create child process in process creation!\n");
+			exit(1);
+		}else if (pid == 0) {
+			// we are in child
 			exit(0);
 		} 
 
@@ -85,11 +89,16 @@ void measure_process_switch(int iterations) {
 
 		pid_t pid;
 
-		if((pid = fork()) != 0) {
+		if((pid = fork()) == -1) {
+			printf("fail to create child process in process switch!\n");
+			exit(1);
+		}else if(pid != 0) {
+			// we are in parent
 			START_RDTSC(start);
 			wait(NULL);
 			read(fd[0], (void*)&end, sizeof(uint64_t));
 		}else {
+			// we are in child
 			END_RDTSCP(end);
 			write(fd[1], (void*)&end, sizeof(uint64_t));
 			exit(0);

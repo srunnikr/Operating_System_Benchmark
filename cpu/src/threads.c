@@ -44,6 +44,8 @@ void measure_thread_creation(int iterations) {
 
 	for(int i=0; i<iterations; ++i) {
 
+		int create_sucess = -1;
+
 		// Note the start time, call kernel functions to disable preemption & interrupt here
 		__asm__ volatile ("CPUID\n\t"
 			 "RDTSC\n\t"
@@ -53,7 +55,7 @@ void measure_thread_creation(int iterations) {
 		 );
 
 		// test thread creation time
-		pthread_create(&thread, NULL, thread_function, NULL);
+		create_sucess = pthread_create(&thread, NULL, thread_function, NULL);
 
 		__asm__ volatile ("rdtscp\n\t"
 			"mov %%edx, %0\n\t"
@@ -62,6 +64,11 @@ void measure_thread_creation(int iterations) {
 			: "=r" (high2), "=r" (low2)
 			:: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
+
+		if (create_sucess != 0) {
+			printf("fail to create new thread in thread creation!\n");
+			exit(1);
+		}
 
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
@@ -99,10 +106,16 @@ void measure_thread_switch(int iterations) {
 	}
 
 	pthread_t thread;
+	int create_sucess = -1;
 
 	for(int i=0; i<iterations; ++i) {
 
-		pthread_create(&thread, NULL, thread_function_2, NULL);
+		create_sucess = pthread_create(&thread, NULL, thread_function_2, NULL);
+
+		if (create_sucess != 0) {
+			printf("fail to create new thread in thread switch!\n");
+			exit(1);
+		}
 
 		START_RDTSC(start);
 
