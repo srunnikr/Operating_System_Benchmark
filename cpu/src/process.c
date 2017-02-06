@@ -52,6 +52,8 @@ void measure_process_creation(int iterations) {
 			// we are in child
 			exit(0);
 		} 
+		
+		wait(NULL);
 
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
 		uint64_t tick2 = ((uint64_t)high2 << 32) | low2;
