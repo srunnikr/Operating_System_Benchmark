@@ -13,7 +13,7 @@
 
 
 void measure_thread_creation(int);
-void measure_thread_contextswitch(int);
+void measure_thread_switch(int);
  
 
 #endif /* THREADS_H_ */

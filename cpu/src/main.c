@@ -42,10 +42,10 @@ int main(int argc, char** argv) {
     measure_procedure_7arg(iterations);
 
     measure_thread_creation(iterations);
-    measure_thread_contextswitch(iterations);
+    measure_thread_switch(iterations);
 
     measure_process_creation(iterations);
-    measure_process_contextswitch(iterations);
+    measure_process_switch(iterations);
 
     return 0;
 

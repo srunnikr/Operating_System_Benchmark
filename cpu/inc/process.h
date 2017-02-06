@@ -12,6 +12,6 @@
 #define PROCESS_H_
 
 void measure_process_creation(int);
-void measure_process_contextswitch(int);
+void measure_process_switch(int);
 
 #endif /* PROCESS_H_ */

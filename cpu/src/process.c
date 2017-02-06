@@ -61,11 +61,46 @@ void measure_process_creation(int iterations) {
 	}
 
 	uint64_t average = calc_average(ticks, iterations, 100000, 500000, 100000);
-	printf("PROCESS : Average cycles = %"PRIu64"\n\n", average);
+	printf("PROCESS_CREATION : Average cycles = %"PRIu64"\n\n", average);
 
 	fclose(fp);
 	free(ticks);
 }
 
-void measure_process_contextswitch(int iterations) {
+void measure_process_switch(int iterations) {
+	
+	uint64_t start = 0, end = 0;
+	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
+	memset(ticks, 0, iterations * sizeof(uint64_t));
+	FILE* fp = fopen("logs/process_switch.txt","w+");
+
+	for(int i=0; i<iterations; ++i) {
+
+		int fd[2];
+		pipe(fd);
+		
+		pid_t pid;
+
+		if((pid = fork()) != 0) {
+			START_RDTSC(start);
+			wait(NULL);
+			read(fd[0], (void*)&end, sizeof(uint64_t));
+		}else {
+			END_RDTSCP(end);
+			write(fd[1], (void*)&end, sizeof(uint64_t));
+			exit(0);
+		}
+			
+		ticks[i] = (end - start);
+	}
+
+	for(int i=0; i<iterations; ++i) {
+        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+	}
+
+	uint64_t average = calc_average(ticks, iterations, 0, -1, -1 );
+	printf("PROCESS_SWITCH : Average cycles = %"PRIu64"\n\n", average);
+
+	fclose(fp);
+	free(ticks);
 }

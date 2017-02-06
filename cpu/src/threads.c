@@ -73,5 +73,5 @@ void measure_thread_creation(int iterations) {
 	free(ticks);
 }
 
-void measure_thread_contextswitch(int iterations) {
+void measure_thread_switch(int iterations) {
 }
