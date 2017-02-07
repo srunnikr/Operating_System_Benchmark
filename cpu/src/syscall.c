@@ -42,7 +42,7 @@ void measure_syscalls(int iterations) {
 			 :: "%rax", "%rbx", "%rcx", "%rdx"
 		 );
 
-        getpid();
+        syscall(SYS_getpid);
 
         __asm__ volatile ("rdtscp\n\t"
 			"mov %%edx, %0\n\t"
