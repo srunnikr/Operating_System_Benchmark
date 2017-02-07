@@ -86,7 +86,7 @@ void measure_thread_creation(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
-	uint64_t average = calc_average(ticks, iterations, 0, 10000, 5000);
+	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 10000, 5000);
 	printf("THREAD_CREATION : Average cycles = %"PRIu64"\n\n", average);
 
 	fflush(NULL);	// flush everything in the buffer, otherwise other threads
@@ -132,7 +132,7 @@ void measure_thread_switch(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
-	uint64_t average = calc_average(ticks, iterations, 0, 10000, 5000);
+	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 10000, 5000);
 	printf("THREAD_SWITCH : Average cycles = %"PRIu64"\n\n", average);
 
 	fflush(NULL);	// flush everything in the buffer, otherwise other threads

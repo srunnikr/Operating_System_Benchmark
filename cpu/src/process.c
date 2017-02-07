@@ -65,7 +65,7 @@ void measure_process_creation(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
-	uint64_t average = calc_average(ticks, iterations, 0, 200000, 50000);
+	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 200000, 50000);
 	printf("PROCESS_CREATION : Average cycles = %"PRIu64"\n\n", average);
 	
 	fflush(NULL);
@@ -113,7 +113,7 @@ void measure_process_switch(int iterations) {
         fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
-	uint64_t average = calc_average(ticks, iterations, 0, 300000, 50000);
+	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 300000, 50000);
 	printf("PROCESS_SWITCH : Average cycles = %"PRIu64"\n\n", average);
 
 	fflush(NULL);

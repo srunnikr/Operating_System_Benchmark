@@ -52,24 +52,23 @@ void measure_cpufreq() {
 
 	}
 
-	uint64_t average = calc_average(ticks, iterations, -1, -1, 100);
+	uint64_t average = (uint64_t)calc_average(ticks, iterations, -1, -1, 100);
 	printf("CPU average cycles : %"PRIu64"\n\n", (average / sleep_time));
 
 	fflush(NULL);
 	free(ticks);
 }
 
-double_t calc_timeread_overhead(uint64_t iterations) {
+double calc_timeread_overhead(uint64_t iterations) {
 
 	// Function to measure the overhead of RDTSC instruction
     uint32_t high1, low1, high2, low2;
 	uint64_t total = 0, start, stop;
-	double_t average;
     uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
     memset(ticks, 0, iterations * sizeof(uint64_t));
     FILE* fp = fopen("logs/time_overhead.txt", "w+");
 
-	for (uint64_t i = 0; i<iterations; ++i) {
+	for (int i=0; i<iterations; ++i) {
 
         __asm__ __volatile__(
             "CPUID\n\t"
@@ -98,7 +97,7 @@ double_t calc_timeread_overhead(uint64_t iterations) {
     }
 
 	//average = (double_t) total / (double_t) iterations;
-    average = calc_average(ticks, iterations, -1, -1, 100);
+    double average = calc_average(ticks, iterations, -1, -1, 100);
     printf("Time read overhead : %f\n\n", average);
 
     fprintf(fp, "%f", average);
@@ -116,7 +115,6 @@ double calc_loop_overhead(uint64_t iterations) {
     uint32_t high1, low1, high2, low2;
 	uint64_t total = 0, start, stop;
     FILE* fp = fopen("logs/loop_overhead.txt", "w+");
-	double average;
 
     __asm__ __volatile__(
         "CPUID\n\t"
@@ -126,7 +124,7 @@ double calc_loop_overhead(uint64_t iterations) {
         :: "%rax", "%rbx", "%rcx", "%rdx"
     );
 
-	for (uint64_t i = 0; i<iterations; ++i) {
+	for (int i=0; i<iterations; ++i) {
 	}
 
     __asm__ __volatile__(
@@ -143,7 +141,7 @@ double calc_loop_overhead(uint64_t iterations) {
 	total += (stop - start);
     fprintf(fp, "%"PRIu64"\n", total);
 
-	average = (double_t) total / (double_t) iterations;
+	double average = (double) total / (double) iterations;
 
     fprintf(fp, "%f", average);
     fclose(fp);
@@ -163,15 +161,14 @@ double calc_loop_overhead(uint64_t iterations) {
  * diff:difference bound; adjacent difference greater than diff will be disgarded,
  *      if there is no need to set difference, set it to (-1).
  */
-uint64_t calc_average(uint64_t* ticks,	// ticks array 
+double calc_average(uint64_t* ticks,	// ticks array 
 					  int iterations,	// times of iterations
 					  int min,			// lower bound of cycles
 					  int max,			// uppder bound of cycles
 					  int diff			// difference bound of two adjacent value
-					  ) {
+					  ){
 
-	uint64_t mean = 0;
-	double variance = 0, sd = 0;
+	double mean = 0, variance = 0, sd = 0;
 
 	int count = 0;
 
@@ -191,7 +188,7 @@ uint64_t calc_average(uint64_t* ticks,	// ticks array
 		exit(1);
 	}
     
-	mean = sum / count;
+	mean = (double)sum / count;
 
     for(int i = 1; i < iterations; ++i) {
 		if ((diff >= 0 ? abs(ticks[i] - ticks[i-1]) <= diff : 1) && 
