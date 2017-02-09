@@ -16,7 +16,20 @@ set ( SERVER_SRC
     src/util.c
 )
 
+set( CLIENT_SRC_BW
+    src/bandwidth_client.c
+    src/util.c
+)
+
+set( SERVER_SRC_BW
+    src/bandwidth_server.c
+    src/util.c
+)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(client_conn ${CLIENT_SRC})
 add_executable(server_conn ${SERVER_SRC})
+
+add_executable(client_bw ${CLIENT_SRC_BW})
+add_executable(server_bw ${SERVER_SRC_BW})
