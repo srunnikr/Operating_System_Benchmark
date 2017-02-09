@@ -97,8 +97,8 @@ void measure_process_switch(int iterations) {
 		}else if(pid != 0) {
 			// we are in parent
 			START_RDTSC(start);
-			wait(NULL);
 			read(fd[0], (void*)&end, sizeof(uint64_t));
+			wait(NULL);
 		}else {
 			// we are in child
 			END_RDTSCP(end);
