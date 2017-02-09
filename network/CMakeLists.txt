@@ -18,5 +18,5 @@ set ( SERVER_SRC
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(client ${CLIENT_SRC})
-add_executable(server ${SERVER_SRC})
+add_executable(client_conn ${CLIENT_SRC})
+add_executable(server_conn ${SERVER_SRC})
