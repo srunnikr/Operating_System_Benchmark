@@ -22,14 +22,20 @@ void bandwidth_test_local_client() {
 	for the transfer
 	*/
 
-	char* server_ip = "127.0.0.1"
-	char* server_port = 5000
+	char* server_ip = "127.0.0.1";
+	uint16_t server_port = 5000;
 
 	struct sockaddr_in server;
 
     server.sin_addr.s_addr = inet_addr(server_ip);
     server.sin_family = AF_INET;
     server.sin_port = htons(server_port);
+
+    int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (serv_sock < 0) {
+		perror("ERROR : Socket creation has failed\n");
+		exit(1);
+	}
 
 	if (connect(serv_sock, (struct sockaddr*) &server, sizeof(server)) < 0) {
         perror("ERROR: Connect failed\n");
@@ -48,8 +54,8 @@ void bandwidth_test_local_client() {
 	START_RDTSC(start);
 	while (bytes_sent != BUFFSIZE) {
 
-		sent_bytes = send(serv_sock, msg + bytes_sent, (BUFFSIZE - bytes_sent));
-		if (n < 0) {
+		sent_bytes = send(serv_sock, (msg + bytes_sent), (BUFFSIZE - bytes_sent), 0);
+		if (sent_bytes < 0) {
 			perror("Send failed!\n");
 			exit(1);
 		}

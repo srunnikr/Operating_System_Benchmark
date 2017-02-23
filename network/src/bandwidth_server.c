@@ -16,7 +16,7 @@
 
 int main(int argc, char** argv) {
 
-	uint8_t port = 5000;
+	uint16_t port = 5000;
 
 	// Create socket descriptors and variables
 	int server_sock, client_sock, client_len;
@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
 
 		END_RDTSCP(end);
 
-		printf("Time at server side to get all data : %d", (end - start));
+		printf("Time at server side to get all data : %"PRIu64"\n", (end - start));
 
 		close(client_sock);
 

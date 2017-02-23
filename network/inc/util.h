@@ -3,6 +3,8 @@
 
 uint64_t calc_reading(uint32_t high, uint32_t low);
 
+static volatile uint32_t _high, _low;
+
 #define START_RDTSC(start) {	\
     __asm__ __volatile__(		\
         "CPUID\n\t"				\

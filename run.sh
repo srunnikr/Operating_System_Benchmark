@@ -27,6 +27,17 @@ cd ../
 echo ""
 
 echo ""
+echo "-------------------------"
+echo "MEMORY"
+echo "-------------------------"
+echo ""
+cd mem
+cmake .
+make clean && make
+cd ../
+echo ""
+
+echo ""
 echo "========================="
 echo "Running experiments"
 echo "========================="

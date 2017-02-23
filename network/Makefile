@@ -111,30 +111,110 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named server
+# Target rules for targets named client_conn
 
 # Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
+client_conn: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_conn
+.PHONY : client_conn
 
 # fast build rule for target.
-server/fast:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
-.PHONY : server/fast
+client_conn/fast:
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/build
+.PHONY : client_conn/fast
 
 #=============================================================================
-# Target rules for targets named client
+# Target rules for targets named server_bw
 
 # Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
+server_bw: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_bw
+.PHONY : server_bw
 
 # fast build rule for target.
-client/fast:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
-.PHONY : client/fast
+server_bw/fast:
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/build
+.PHONY : server_bw/fast
+
+#=============================================================================
+# Target rules for targets named server_conn
+
+# Build rule for target.
+server_conn: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_conn
+.PHONY : server_conn
+
+# fast build rule for target.
+server_conn/fast:
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/build
+.PHONY : server_conn/fast
+
+#=============================================================================
+# Target rules for targets named client_bw
+
+# Build rule for target.
+client_bw: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_bw
+.PHONY : client_bw
+
+# fast build rule for target.
+client_bw/fast:
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/build
+.PHONY : client_bw/fast
+
+src/bandwidth_client.o: src/bandwidth_client.c.o
+
+.PHONY : src/bandwidth_client.o
+
+# target to build an object file
+src/bandwidth_client.c.o:
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/bandwidth_client.c.o
+.PHONY : src/bandwidth_client.c.o
+
+src/bandwidth_client.i: src/bandwidth_client.c.i
+
+.PHONY : src/bandwidth_client.i
+
+# target to preprocess a source file
+src/bandwidth_client.c.i:
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/bandwidth_client.c.i
+.PHONY : src/bandwidth_client.c.i
+
+src/bandwidth_client.s: src/bandwidth_client.c.s
+
+.PHONY : src/bandwidth_client.s
+
+# target to generate assembly for a file
+src/bandwidth_client.c.s:
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/bandwidth_client.c.s
+.PHONY : src/bandwidth_client.c.s
+
+src/bandwidth_server.o: src/bandwidth_server.c.o
+
+.PHONY : src/bandwidth_server.o
+
+# target to build an object file
+src/bandwidth_server.c.o:
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/bandwidth_server.c.o
+.PHONY : src/bandwidth_server.c.o
+
+src/bandwidth_server.i: src/bandwidth_server.c.i
+
+.PHONY : src/bandwidth_server.i
+
+# target to preprocess a source file
+src/bandwidth_server.c.i:
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/bandwidth_server.c.i
+.PHONY : src/bandwidth_server.c.i
+
+src/bandwidth_server.s: src/bandwidth_server.c.s
+
+.PHONY : src/bandwidth_server.s
+
+# target to generate assembly for a file
+src/bandwidth_server.c.s:
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/bandwidth_server.c.s
+.PHONY : src/bandwidth_server.c.s
 
 src/client_connection.o: src/client_connection.c.o
 
@@ -142,7 +222,7 @@ src/client_connection.o: src/client_connection.c.o
 
 # target to build an object file
 src/client_connection.c.o:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client_connection.c.o
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/client_connection.c.o
 .PHONY : src/client_connection.c.o
 
 src/client_connection.i: src/client_connection.c.i
@@ -151,7 +231,7 @@ src/client_connection.i: src/client_connection.c.i
 
 # target to preprocess a source file
 src/client_connection.c.i:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client_connection.c.i
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/client_connection.c.i
 .PHONY : src/client_connection.c.i
 
 src/client_connection.s: src/client_connection.c.s
@@ -160,7 +240,7 @@ src/client_connection.s: src/client_connection.c.s
 
 # target to generate assembly for a file
 src/client_connection.c.s:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client_connection.c.s
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/client_connection.c.s
 .PHONY : src/client_connection.c.s
 
 src/server_connection.o: src/server_connection.c.o
@@ -169,7 +249,7 @@ src/server_connection.o: src/server_connection.c.o
 
 # target to build an object file
 src/server_connection.c.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server_connection.c.o
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/server_connection.c.o
 .PHONY : src/server_connection.c.o
 
 src/server_connection.i: src/server_connection.c.i
@@ -178,7 +258,7 @@ src/server_connection.i: src/server_connection.c.i
 
 # target to preprocess a source file
 src/server_connection.c.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server_connection.c.i
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/server_connection.c.i
 .PHONY : src/server_connection.c.i
 
 src/server_connection.s: src/server_connection.c.s
@@ -187,7 +267,7 @@ src/server_connection.s: src/server_connection.c.s
 
 # target to generate assembly for a file
 src/server_connection.c.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server_connection.c.s
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/server_connection.c.s
 .PHONY : src/server_connection.c.s
 
 src/util.o: src/util.c.o
@@ -196,8 +276,10 @@ src/util.o: src/util.c.o
 
 # target to build an object file
 src/util.c.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/util.c.o
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.o
 .PHONY : src/util.c.o
 
 src/util.i: src/util.c.i
@@ -206,8 +288,10 @@ src/util.i: src/util.c.i
 
 # target to preprocess a source file
 src/util.c.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/util.c.i
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.i
 .PHONY : src/util.c.i
 
 src/util.s: src/util.c.s
@@ -216,8 +300,10 @@ src/util.s: src/util.c.s
 
 # target to generate assembly for a file
 src/util.c.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/util.c.s
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.s
 .PHONY : src/util.c.s
 
 # Help Target
@@ -227,9 +313,17 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... server"
+	@echo "... client_conn"
 	@echo "... edit_cache"
-	@echo "... client"
+	@echo "... server_bw"
+	@echo "... server_conn"
+	@echo "... client_bw"
+	@echo "... src/bandwidth_client.o"
+	@echo "... src/bandwidth_client.i"
+	@echo "... src/bandwidth_client.s"
+	@echo "... src/bandwidth_server.o"
+	@echo "... src/bandwidth_server.i"
+	@echo "... src/bandwidth_server.s"
 	@echo "... src/client_connection.o"
 	@echo "... src/client_connection.i"
 	@echo "... src/client_connection.s"
