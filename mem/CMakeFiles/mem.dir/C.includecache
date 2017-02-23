@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.c
+stdio.h
+-
+stdlib.h
+-
+unistd.h
+-
+stdint.h
+-
+inttypes.h
+-
+string.h
+-
+utils.h
+/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/utils.h
+mem.h
+/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.h
+
+inc/mem.h
+
+inc/utils.h
+
