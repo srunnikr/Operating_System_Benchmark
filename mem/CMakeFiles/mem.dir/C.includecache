@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.c
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.c
 stdio.h
 -
 stdlib.h
@@ -20,9 +20,9 @@ inttypes.h
 string.h
 -
 utils.h
-/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/utils.h
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/utils.h
 mem.h
-/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.h
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/mem.h
 
 inc/mem.h
 

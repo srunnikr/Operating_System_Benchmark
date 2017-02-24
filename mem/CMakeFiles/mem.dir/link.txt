@@ -1,1 +1,1 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/mem.dir/src/mem.c.o  -o bin/mem  
+/usr/bin/cc     CMakeFiles/mem.dir/src/mem.c.o  -o bin/mem -rdynamic 

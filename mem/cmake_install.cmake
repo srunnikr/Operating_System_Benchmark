@@ -1,4 +1,4 @@
-# Install script for directory: /Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem
+# Install script for directory: /home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -27,6 +27,11 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   endif()
 endif()
 
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
+endif()
+
 if(CMAKE_INSTALL_COMPONENT)
   set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
 else()
@@ -35,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

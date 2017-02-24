@@ -7,40 +7,81 @@
 #include "utils.h"
 #include "mem.h"
 
-void memory_test1(int loops) {
+void memory_test1(uint32_t loop_count) {
 
-	uint32_t pow_limit = 27;
+	uint32_t loops = loop_count;
+
+	// Create pointers for arrays
+	int	**arr;
+
+	// Create a pointer to stride through the array
+	void **p;
+
+	// local variables
 	uint64_t start, stop;
+	uint64_t arr_size, stride_len, i;
 
-	uint64_t size = 6; // start from 2^6 = 64
-	char a;
+	// We measure the array sizes from 2^9 to 2^27 bytes
+	uint32_t arr_start_size = 9; // 2^9
+	uint32_t arr_end_size = 27; // 2^27
 
-	for(; size < pow_limit; ++size) {
 
-		// Main loop where we will vary the array size
-		uint64_t arrSize = 1 << size;
-		char* arr = (char *) malloc (arrSize * sizeof(char));
-		memset(arr, 0, arrSize);
+	// Stride length increases in a power of 2
+	for (stride_len = 1; stride_len < (2<<10); stride_len *= 2) {
 
-		// Start the measurement
-		START_RDTSC(start);
-		// Run loop for loops times
-		for (uint32_t i = 0; i < loops; ++i) {
-			a = arr[i];
+		// For each stride, allocate arrays of different sizes
+		for (arr_size = arr_start_size; arr_size <= arr_end_size; arr_size++) {
+
+			arr = malloc(1 << arr_size);
+			if (! arr) {
+
+				printf("Failed to allocate memory for array\n");
+				exit(1);
+
+			}
+
+			// Set pointers to access the next stride location
+			for (i = 0; i + 1 < (1 << arr_size) / (stride_len * sizeof(*arr)); i++) {
+
+				arr[i * stride_len] = (int *)(arr + ((i + 1) * stride_len));
+
+			}
+
+			// Ensure the last pointer points to start
+			arr[i * stride_len] = (int *)arr;
+
+			// Set p to beginning
+			p = (void **)arr;
+
+
+			// Run the tests
+			START_RDTSC(start);
+			for (i = 0; i < loops; ++i) {
+				p = *p;
+			}
+			END_RDTSCP(stop);
+
+			// Calculate the average cycles for this particular array size for the given stride length
+			double res =  (double)(stop - start) / (double)loops;
+
+			printf("stride %"PRIu64" and size %"PRIu64" = %f\n", stride_len, arr_size, res);
+
+			// We have huge chunks of memory, free to avoid segmentation faults
+			free(arr);
+
 		}
-		END_RDTSCP(stop);
-
-		printf("Cycles taken : %f\n", (double)((stop - start)/(double)loops));
 
 	}
 
 }
 
 
-int main(int argc, char** argv) {
+int main() {
 
-	printf("Starting memory tests\n");
-
+	printf("Starting measurement\n");
 	memory_test1(100000);
+	printf("Done!\n");
+
+	return 0;
 
 }
