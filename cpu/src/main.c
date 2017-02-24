@@ -12,7 +12,7 @@
 #include "utils.h"
 
 // Make this true if you need to check CPU frequency
-#define CPU_FREQ_MEASUREMENT false
+#define CPU_FREQ_MEASUREMENT true
 
 int main(int argc, char** argv) {
 

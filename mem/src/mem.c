@@ -76,10 +76,83 @@ void memory_test1(uint32_t loop_count) {
 }
 
 
+void memory_test2(uint64_t loops) {
+
+	/*
+	 * This test will measure the memory bandwidth of the system
+	 * */
+	uint64_t start, end;
+
+	printf("Starting memory test\n");
+	uint64_t arr_size = 64 * 1024 * 1024; // 64 MB
+	char* p = NULL;
+
+	// Allocate the array
+	char* arr = (char*) malloc (arr_size * sizeof(arr));
+	if (!arr) {
+		printf("Error while allocating the array\n");
+		exit(-1);
+	}
+	memset(arr, 0, arr_size * sizeof(char));
+
+	double read_bandwidth, write_bandwidth;
+	uint64_t middle = arr_size / 2;
+	uint64_t total = 0;
+
+	// Read bandwidth
+	for (uint64_t j = 0; j < loops; ++j) {
+		START_RDTSC(start);
+		for(uint64_t i=0; i < middle; ++i) {
+			uint64_t t1 = arr[i];
+			uint64_t t2 = arr[middle+i];
+		}
+		END_RDTSCP(end);
+		total += (end - start);
+	}
+
+	// from cpu experiment 1 cycle = 0.416 ns
+
+	uint64_t total_read_size = loops * arr_size;
+	double total_read_size_MB = (double) total_read_size / (1024 * 1024);
+	double total_time = (double)total * 0.416 * 1e-9;
+	read_bandwidth = total_read_size_MB / total_time;
+
+	printf("Total read size : %"PRIu64" and total time in s :%f\n", total_read_size, total_time);
+	printf("Read bandwidth : %f\n", read_bandwidth);
+
+
+	// write bandwidth
+	total = 0;
+	for (uint64_t j = 0; j < loops; ++j) {
+		START_RDTSC(start);
+		for(uint64_t i=0; i < middle; ++i) {
+			arr[i] = 1;
+			arr[middle+i] = 2;
+		}
+		END_RDTSCP(end);
+		total += (end - start);
+	}
+
+	uint64_t total_write_size = loops * arr_size;
+	double total_write_size_MB = (double) total_write_size / (1024 * 1024);
+	total_time = (double)total * 0.416 * 1e-9;
+	write_bandwidth = total_write_size_MB / total_time;
+
+	printf("Total read size : %"PRIu64" and total time in s :%f\n", total_write_size, total_time);
+	printf("Read bandwidth : %f\n", write_bandwidth);
+
+
+	// free memory
+	free(arr);
+
+
+}
+
 int main() {
 
 	printf("Starting measurement\n");
 	memory_test1(100000);
+	memory_test2(100);
 	printf("Done!\n");
 
 	return 0;

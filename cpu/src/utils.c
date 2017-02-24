@@ -52,6 +52,14 @@ void measure_cpufreq() {
 
 	}
 
+	uint64_t t = 0;
+	for (int i=0; i<iterations; ++i) {
+		t += ticks[i];
+	}
+	double a = (double)t / (double)iterations;
+	printf("Avg : %f\n", a);
+	printf("time per cycle : %f\n", (double)2 / a );
+
 	uint64_t average = (uint64_t)calc_average(ticks, iterations, -1, -1, 100);
 	printf("CPU average cycles : %"PRIu64"\n\n", (average / sleep_time));
 
