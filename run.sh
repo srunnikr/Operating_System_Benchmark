@@ -61,6 +61,14 @@ cd network
 ./run.sh
 cd ..
 
+echo ""
+echo "-------------------------"
+echo "MEMORY"
+echo "-------------------------"
+echo ""
+cd mem
+./run.sh
+cd ..
 
 echo ""
 echo "========================="
