@@ -12,7 +12,7 @@
 #include "utils.h"
 
 // Make this true if you need to check CPU frequency
-#define CPU_FREQ_MEASUREMENT true
+#define CPU_FREQ_MEASUREMENT false
 
 int main(int argc, char** argv) {
 
@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
     calc_loop_overhead(iterations);
 
     measure_syscalls(iterations);
+    measure_syscalls_ppid(iterations);
 
     measure_procedure_0arg(iterations);
     measure_procedure_1arg(iterations);
