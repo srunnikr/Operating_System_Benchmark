@@ -138,8 +138,8 @@ void memory_test2(uint64_t loops) {
 	total_time = (double)total * 0.416 * 1e-9;
 	write_bandwidth = total_write_size_MB / total_time;
 
-	printf("Total read size : %"PRIu64" and total time in s :%f\n", total_write_size, total_time);
-	printf("Read bandwidth : %f\n", write_bandwidth);
+	printf("Total write size : %"PRIu64" and total time in s :%f\n", total_write_size, total_time);
+	printf("Write bandwidth : %f\n", write_bandwidth);
 
 
 	// free memory
