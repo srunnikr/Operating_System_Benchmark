@@ -21,13 +21,13 @@ void memory_test1(uint32_t loop_count) {
 	uint64_t start, stop;
 	uint64_t arr_size, stride_len, i;
 
-	// We measure the array sizes from 2^9 to 2^27 bytes
+	// We measure the array sizes from 2^9 to 2^28 bytes
 	uint32_t arr_start_size = 9; // 2^9
-	uint32_t arr_end_size = 27; // 2^27
+	uint32_t arr_end_size = 28; // 2^28
 
 
 	// Stride length increases in a power of 2
-	for (stride_len = 1; stride_len < (2<<10); stride_len *= 2) {
+	for (stride_len = 1; stride_len < (2<<16); stride_len *= 2) {
 
 		// For each stride, allocate arrays of different sizes
 		for (arr_size = arr_start_size; arr_size <= arr_end_size; arr_size++) {
@@ -85,15 +85,15 @@ void memory_test2(uint64_t loops) {
 
 	printf("Starting memory test\n");
 	uint64_t arr_size = 64 * 1024 * 1024; // 64 MB
-	char* p = NULL;
+	uint64_t* p = NULL;
 
 	// Allocate the array
-	char* arr = (char*) malloc (arr_size * sizeof(arr));
+	uint64_t* arr = (uint64_t*) malloc (arr_size * sizeof(uint64_t));
 	if (!arr) {
 		printf("Error while allocating the array\n");
 		exit(-1);
 	}
-	memset(arr, 0, arr_size * sizeof(char));
+	memset(arr, 0, arr_size * sizeof(uint64_t));
 
 	double read_bandwidth, write_bandwidth;
 	uint64_t middle = arr_size / 2;
@@ -113,8 +113,8 @@ void memory_test2(uint64_t loops) {
 	// from cpu experiment 1 cycle = 0.416 ns
 
 	uint64_t total_read_size = loops * arr_size;
-	double total_read_size_MB = (double) total_read_size / (1024 * 1024);
-	double total_time = (double)total * 0.416 * 1e-9;
+	double total_read_size_MB = (double) (8 * total_read_size) / (1024 * 1024);
+	double total_time = (double) total * 0.416 * 1e-9;
 	read_bandwidth = total_read_size_MB / total_time;
 
 	printf("Total read size : %"PRIu64" and total time in s :%f\n", total_read_size, total_time);
@@ -134,7 +134,7 @@ void memory_test2(uint64_t loops) {
 	}
 
 	uint64_t total_write_size = loops * arr_size;
-	double total_write_size_MB = (double) total_write_size / (1024 * 1024);
+	double total_write_size_MB = (double) (8 * total_write_size) / (1024 * 1024);
 	total_time = (double)total * 0.416 * 1e-9;
 	write_bandwidth = total_write_size_MB / total_time;
 
