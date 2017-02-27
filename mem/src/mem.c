@@ -4,11 +4,15 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/mman.h>	
 #include "utils.h"
 #include "mem.h"
 
 void memory_latency(uint32_t loop_count) {
 
+	printf("Starting memory latency test...\n");
+	
 	uint32_t loops = loop_count;
 
 	// Create pointers for arrays
@@ -81,17 +85,18 @@ void memory_bandwidth(uint64_t loops) {
 	/*
 	 * This test will measure the memory bandwidth of the system
 	 * */
+	printf("Starting memory bandwidth test...\n");
+
 	uint64_t start, end;
 
-	printf("Starting memory test\n");
-	uint64_t arr_size = 64 * 1024 * 1024; // 64 MB
+	uint64_t arr_size = 64 * 1024 * 1024; // 64 * 8 MB
 	uint64_t* p = NULL;
 
 	// Allocate the array
 	uint64_t* arr = (uint64_t*) malloc (arr_size * sizeof(uint64_t));
 	if (!arr) {
 		printf("Error while allocating the array\n");
-		exit(-1);
+		exit(1);
 	}
 	memset(arr, 0, arr_size * sizeof(uint64_t));
 
@@ -144,15 +149,58 @@ void memory_bandwidth(uint64_t loops) {
 
 	// free memory
 	free(arr);
+}
 
+void memory_pagefault(uint64_t loops) {
+
+	printf("Starting memory page fault test...\n");
+	
+	uint64_t PAGE_SIZE = 4096;			// confirm this in your machine
+	uint64_t page_fault_count = 100;	// set page fault times in each loop
+
+	uint64_t start, end, total = 0;
+	int fd;
+	char *fmap; 
+	char read;
+
+	for (uint64_t j = 0; j < loops; j++) {
+		
+		uint64_t offset = 0;	
+
+		for(uint64_t i = 0; i < page_fault_count; i++) {
+			
+			if ((fd = open("test_file", O_RDONLY)) < 0) {
+				printf("can’t open test_file\n");
+				exit(1);
+			}
+			char *fmap = (char*)mmap(NULL, PAGE_SIZE, PROT_READ, MAP_SHARED, fd, offset);
+			
+			START_RDTSC(start);
+			read = fmap[0];
+			END_RDTSCP(end);
+
+			munmap(fmap, PAGE_SIZE);
+			close(fd);
+
+			total += (end - start);
+			offset += PAGE_SIZE;	
+		}
+	}
+	
+	uint64_t total_pagefaults = loops * page_fault_count;
+	double avg_cycles = (double)total / (double)total_pagefaults;
+
+	printf("Average page fault service cycles : %f\n", avg_cycles); 
 
 }
+
 
 int main() {
 
 	printf("Starting measurement\n");
-	memory_test1(100000);
-	memory_test2(100);
+	memory_latency(100000);
+	memory_bandwidth(100);
+	memory_pagefault(1);
 	printf("Done!\n");
 
 	return 0;
