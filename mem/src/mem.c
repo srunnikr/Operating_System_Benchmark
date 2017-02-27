@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "mem.h"
 
-void memory_test1(uint32_t loop_count) {
+void memory_latency(uint32_t loop_count) {
 
 	uint32_t loops = loop_count;
 
@@ -76,7 +76,7 @@ void memory_test1(uint32_t loop_count) {
 }
 
 
-void memory_test2(uint64_t loops) {
+void memory_bandwidth(uint64_t loops) {
 
 	/*
 	 * This test will measure the memory bandwidth of the system
