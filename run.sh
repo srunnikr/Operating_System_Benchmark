@@ -17,10 +17,10 @@ cd ../
 
 echo ""
 echo "-------------------------"
-echo "NETWORK"
+echo "MEMORY"
 echo "-------------------------"
 echo ""
-cd network
+cd mem
 cmake .
 make clean && make
 cd ../
@@ -28,10 +28,10 @@ echo ""
 
 echo ""
 echo "-------------------------"
-echo "MEMORY"
+echo "NETWORK"
 echo "-------------------------"
 echo ""
-cd mem
+cd network
 cmake .
 make clean && make
 cd ../
@@ -54,19 +54,19 @@ cd ..
 
 echo ""
 echo "-------------------------"
-echo "NETWORK"
+echo "MEMORY"
 echo "-------------------------"
 echo ""
-cd network
+cd mem
 ./run.sh
 cd ..
 
 echo ""
 echo "-------------------------"
-echo "MEMORY"
+echo "NETWORK"
 echo "-------------------------"
 echo ""
-cd mem
+cd network
 ./run.sh
 cd ..
 
@@ -77,8 +77,11 @@ echo "========================="
 echo ""
 cd cpu
 make clean
+cd ../mem
+make clean
 cd ../network
 make clean
+cd ..
 
 echo ""
 echo "========================="

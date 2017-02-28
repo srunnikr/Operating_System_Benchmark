@@ -13,7 +13,7 @@
 #include <netdb.h>
 #include "util.h"
 
-void bandwidth_test_local_client() {
+void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 
 	/*
 	Code to run bandwidth test locally
@@ -22,8 +22,8 @@ void bandwidth_test_local_client() {
 	for the transfer
 	*/
 
-	char* server_ip = "127.0.0.1";
-	uint16_t server_port = 5000;
+//	char* server_ip = "127.0.0.1";
+//	uint16_t server_port = 5000;
 
 	struct sockaddr_in server;
 
@@ -46,7 +46,7 @@ void bandwidth_test_local_client() {
 
 	uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
 	char* msg = (char*) malloc (BUFFSIZE);
-	memset(&msg, 0, BUFFSIZE);
+	memset(msg, '0', BUFFSIZE);
 	uint64_t start = 0, end = 0;
 	uint32_t sent_bytes = 0;
 
@@ -73,7 +73,15 @@ void bandwidth_test_local_client() {
 
 int main(int argc, char const *argv[]) {
 
-	bandwidth_test_local_client();
+	if (argc != 3) {
+		printf("ERROR : Usage <executable> <ip address> <port>\n");
+		exit(1);
+	}
+
+	const char* server_ip = argv[1];
+	uint16_t server_port = atoi(argv[2]);
+
+	bandwidth_test_local_client(server_ip, server_port);
 
 	return 0;
 }

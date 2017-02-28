@@ -16,7 +16,14 @@
 
 int main(int argc, char** argv) {
 
-	uint16_t port = 5000;
+	if (argc < 2) {
+		printf("ERROR : Usage <executable> <port>\n");
+		exit(1);
+	}
+
+	printf("Starting server\n");
+
+	int port = atoi(argv[1]);
 
 	// Create socket descriptors and variables
 	int server_sock, client_sock, client_len;
@@ -46,10 +53,16 @@ int main(int argc, char** argv) {
 	// Max client connection of 3
 	listen(server_sock , 3);
 
+
 	// Allocate buffer to hold data from client
 	uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
-	char* msg = (char*) malloc (BUFFSIZE);
-	memset(&msg, 0, BUFFSIZE);
+	char* msg = (char*) malloc (BUFFSIZE * sizeof(char));
+	if (!msg) {
+		printf("ERROR: Malloc failed\n");
+		exit(1);
+	}
+
+	memset(msg, '0', BUFFSIZE);
 	uint32_t totalRcvd = 0;
 	int32_t rcvd = 0;
 
