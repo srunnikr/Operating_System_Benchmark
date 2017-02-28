@@ -17,7 +17,6 @@ void memory_latency(uint32_t loop_count) {
 
 	// Create pointers for arrays
 	int	**arr;
-	printf("size of arr: %d\t size of *arr: 5d\n", sizeof(arr), sizeof(*arr));
 
 	// Create a pointer to stride through the array
 	void **p;
