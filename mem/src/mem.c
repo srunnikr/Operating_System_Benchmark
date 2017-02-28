@@ -17,6 +17,7 @@ void memory_latency(uint32_t loop_count) {
 
 	// Create pointers for arrays
 	int	**arr;
+	printf("size of arr: %d\t size of *arr: 5d\n", sizeof(arr), sizeof(*arr));
 
 	// Create a pointer to stride through the array
 	void **p;
@@ -168,7 +169,11 @@ void memory_pagefault(uint64_t loops) {
 		uint64_t offset = 0;	
 
 		for(uint64_t i = 0; i < page_fault_count; i++) {
-			
+
+			// flush disk cache
+			// only apply to Mac OS; change it to an equivalent command in your OS
+			system("sudo purge");	
+
 			if ((fd = open("test_file", O_RDONLY)) < 0) {
 				printf("can’t open test_file\n");
 				exit(1);
