@@ -12,6 +12,7 @@ echo "-------------------------"
 echo "CPU"
 echo "-------------------------"
 cd cpu
+cmake .
 make clean && make
 cd ../
 
