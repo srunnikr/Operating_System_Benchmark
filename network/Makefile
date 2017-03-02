@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named main
+
+# Build rule for target.
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
+
+# fast build rule for target.
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
+
+#=============================================================================
 # Target rules for targets named client_conn
 
 # Build rule for target.
@@ -243,6 +256,33 @@ src/client_connection.c.s:
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/client_connection.c.s
 .PHONY : src/client_connection.c.s
 
+src/main.o: src/main.c.o
+
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.c.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.o
+.PHONY : src/main.c.o
+
+src/main.i: src/main.c.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.c.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.i
+.PHONY : src/main.c.i
+
+src/main.s: src/main.c.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.c.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.s
+.PHONY : src/main.c.s
+
 src/server_connection.o: src/server_connection.c.o
 
 .PHONY : src/server_connection.o
@@ -276,6 +316,7 @@ src/util.o: src/util.c.o
 
 # target to build an object file
 src/util.c.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.o
@@ -288,6 +329,7 @@ src/util.i: src/util.c.i
 
 # target to preprocess a source file
 src/util.c.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.i
@@ -300,6 +342,7 @@ src/util.s: src/util.c.s
 
 # target to generate assembly for a file
 src/util.c.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.s
@@ -313,6 +356,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... main"
 	@echo "... client_conn"
 	@echo "... edit_cache"
 	@echo "... server_bw"
@@ -327,6 +371,9 @@ help:
 	@echo "... src/client_connection.o"
 	@echo "... src/client_connection.i"
 	@echo "... src/client_connection.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 	@echo "... src/server_connection.o"
 	@echo "... src/server_connection.i"
 	@echo "... src/server_connection.s"

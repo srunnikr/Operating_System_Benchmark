@@ -1,7 +1,10 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <stdint.h>
+
 uint64_t calc_reading(uint32_t high, uint32_t low);
+char* get_local_interface_ip(char* ifname);
 
 static volatile uint32_t _high, _low;
 

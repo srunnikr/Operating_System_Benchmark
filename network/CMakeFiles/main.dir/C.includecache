@@ -6,33 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/src/client_connection.c
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/src/main.c
 stdio.h
 -
 stdlib.h
 -
-stdint.h
--
-string.h
--
-unistd.h
--
-inttypes.h
--
-sys/types.h
--
-sys/socket.h
--
-netinet/in.h
--
-sys/socket.h
--
-netinet/in.h
--
-arpa/inet.h
--
-netdb.h
--
+client_connection.h
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/src/client_connection.h
 util.h
 /home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/src/util.h
 
@@ -61,6 +41,8 @@ net/if.h
 -
 arpa/inet.h
 -
+
+inc/client_connection.h
 
 inc/util.h
 stdint.h
