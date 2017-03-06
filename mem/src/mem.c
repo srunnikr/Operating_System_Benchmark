@@ -107,9 +107,23 @@ void memory_bandwidth(uint64_t loops) {
 	// Read bandwidth
 	for (uint64_t j = 0; j < loops; ++j) {
 		START_RDTSC(start);
-		for(uint64_t i=0; i < middle; ++i) {
+		for(uint64_t i=0; i < (middle/8); ++i) {
 			uint64_t t1 = arr[i];
 			uint64_t t2 = arr[middle+i];
+			uint64_t t3 = arr[i+1];
+			uint64_t t4 = arr[middle+i+1];
+			uint64_t t5 = arr[i+2];
+			uint64_t t6 = arr[middle+i+2];
+			uint64_t t7 = arr[i+3];
+			uint64_t t8 = arr[middle+i+3];
+			uint64_t t9 = arr[i+4];
+			uint64_t t10 = arr[middle+i+4];
+			uint64_t t11 = arr[i+5];
+			uint64_t t12 = arr[middle+i+5];
+			uint64_t t13 = arr[i+6];
+			uint64_t t14 = arr[middle+i+6];
+			uint64_t t15 = arr[i+7];
+			uint64_t t16 = arr[middle+i+7];
 		}
 		END_RDTSCP(end);
 		total += (end - start);
@@ -130,9 +144,23 @@ void memory_bandwidth(uint64_t loops) {
 	total = 0;
 	for (uint64_t j = 0; j < loops; ++j) {
 		START_RDTSC(start);
-		for(uint64_t i=0; i < middle; ++i) {
+		for(uint64_t i=0; i < middle/8; ++i) {
 			arr[i] = 1;
 			arr[middle+i] = 2;
+			arr[i+1] = 3;
+			arr[middle+i+1] = 4;
+			arr[i+2] = 5;
+			arr[middle+i+2] = 6;
+			arr[i+3] = 7;
+			arr[middle+i+3] = 8;
+			arr[i+4] = 9;
+			arr[middle+i+4] = 10;
+			arr[i+5] = 11;
+			arr[middle+i+5] = 12;
+			arr[i+6] = 13;
+			arr[middle+i+6] = 14;
+			arr[i+7] = 15;
+			arr[middle+i+7] = 16;
 		}
 		END_RDTSCP(end);
 		total += (end - start);

@@ -19,6 +19,10 @@ inttypes.h
 -
 string.h
 -
+fcntl.h
+-
+sys/mman.h
+-
 utils.h
 /home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/src/utils.h
 mem.h
