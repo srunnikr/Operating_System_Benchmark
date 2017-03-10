@@ -18,6 +18,15 @@ taskset -c 0 ./bin/server_bw 6000 &
 sleep 3
 taskset -c 1 ./bin/client_bw "127.0.0.1" 6000
 echo ""
+
+echo ""
+echo "EXPERIMENT 3 -> RTT"
+echo ""
+./bin/server_rtt "127.0.0.1" 7000 &
+sleep 3
+./bin/client_rtt "127.0.0.1" 7000
+echo ""
+
 echo "==========================="
 echo "Done Network experiment"
 echo "==========================="

@@ -124,6 +124,19 @@ main/fast:
 .PHONY : main/fast
 
 #=============================================================================
+# Target rules for targets named client_rtt
+
+# Build rule for target.
+client_rtt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_rtt
+.PHONY : client_rtt
+
+# fast build rule for target.
+client_rtt/fast:
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/build
+.PHONY : client_rtt/fast
+
+#=============================================================================
 # Target rules for targets named client_conn
 
 # Build rule for target.
@@ -148,6 +161,19 @@ server_bw: cmake_check_build_system
 server_bw/fast:
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/build
 .PHONY : server_bw/fast
+
+#=============================================================================
+# Target rules for targets named server_rtt
+
+# Build rule for target.
+server_rtt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_rtt
+.PHONY : server_rtt
+
+# fast build rule for target.
+server_rtt/fast:
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/build
+.PHONY : server_rtt/fast
 
 #=============================================================================
 # Target rules for targets named server_conn
@@ -283,6 +309,60 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/rtt_client.o: src/rtt_client.c.o
+
+.PHONY : src/rtt_client.o
+
+# target to build an object file
+src/rtt_client.c.o:
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/rtt_client.c.o
+.PHONY : src/rtt_client.c.o
+
+src/rtt_client.i: src/rtt_client.c.i
+
+.PHONY : src/rtt_client.i
+
+# target to preprocess a source file
+src/rtt_client.c.i:
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/rtt_client.c.i
+.PHONY : src/rtt_client.c.i
+
+src/rtt_client.s: src/rtt_client.c.s
+
+.PHONY : src/rtt_client.s
+
+# target to generate assembly for a file
+src/rtt_client.c.s:
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/rtt_client.c.s
+.PHONY : src/rtt_client.c.s
+
+src/rtt_server.o: src/rtt_server.c.o
+
+.PHONY : src/rtt_server.o
+
+# target to build an object file
+src/rtt_server.c.o:
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/rtt_server.c.o
+.PHONY : src/rtt_server.c.o
+
+src/rtt_server.i: src/rtt_server.c.i
+
+.PHONY : src/rtt_server.i
+
+# target to preprocess a source file
+src/rtt_server.c.i:
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/rtt_server.c.i
+.PHONY : src/rtt_server.c.i
+
+src/rtt_server.s: src/rtt_server.c.s
+
+.PHONY : src/rtt_server.s
+
+# target to generate assembly for a file
+src/rtt_server.c.s:
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/rtt_server.c.s
+.PHONY : src/rtt_server.c.s
+
 src/server_connection.o: src/server_connection.c.o
 
 .PHONY : src/server_connection.o
@@ -317,8 +397,10 @@ src/util.o: src/util.c.o
 # target to build an object file
 src/util.c.o:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.o
 	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.o
 .PHONY : src/util.c.o
@@ -330,8 +412,10 @@ src/util.i: src/util.c.i
 # target to preprocess a source file
 src/util.c.i:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.i
 	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.i
 .PHONY : src/util.c.i
@@ -343,8 +427,10 @@ src/util.s: src/util.c.s
 # target to generate assembly for a file
 src/util.c.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/client_rtt.dir/build.make CMakeFiles/client_rtt.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/client_conn.dir/build.make CMakeFiles/client_conn.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/server_bw.dir/build.make CMakeFiles/server_bw.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/server_rtt.dir/build.make CMakeFiles/server_rtt.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/server_conn.dir/build.make CMakeFiles/server_conn.dir/src/util.c.s
 	$(MAKE) -f CMakeFiles/client_bw.dir/build.make CMakeFiles/client_bw.dir/src/util.c.s
 .PHONY : src/util.c.s
@@ -357,9 +443,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... client_rtt"
 	@echo "... client_conn"
 	@echo "... edit_cache"
 	@echo "... server_bw"
+	@echo "... server_rtt"
 	@echo "... server_conn"
 	@echo "... client_bw"
 	@echo "... src/bandwidth_client.o"
@@ -374,6 +462,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/rtt_client.o"
+	@echo "... src/rtt_client.i"
+	@echo "... src/rtt_client.s"
+	@echo "... src/rtt_server.o"
+	@echo "... src/rtt_server.i"
+	@echo "... src/rtt_server.s"
 	@echo "... src/server_connection.o"
 	@echo "... src/server_connection.i"
 	@echo "... src/server_connection.s"
