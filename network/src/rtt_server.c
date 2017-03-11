@@ -19,7 +19,7 @@ void start_server(char* ip, uint16_t port) {
 
 	int server_sock, client_sock, client_len;
 	struct sockaddr_in server, client;
-	uint64_t count = 100000;
+	uint64_t count = 10000;
 
 	int sockaddr_len = sizeof(struct sockaddr_in);
 

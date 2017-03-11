@@ -25,7 +25,7 @@ void start_client(char* ip, uint16_t port) {
 	// Measurement counters
 	uint32_t high1, low1, high2, low2;
 	uint64_t start, end, total;
-	uint64_t count = 100000;
+	uint64_t count = 10000;
 	char c = 'a';
 
 	int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -48,7 +48,6 @@ void start_client(char* ip, uint16_t port) {
 		send(serv_sock, &c, 1, 0);
 		recv(serv_sock, &c, 1, 0);
 		END_RDTSCP(end);
-
 		total += (end - start);
 
 	}
@@ -56,7 +55,9 @@ void start_client(char* ip, uint16_t port) {
 	printf("Total cycles for %"PRIu64" char RTT : %"PRIu64"\n", count, total);
 	double avg_cycles = (double)total / (double)count;
 	double time_ns = avg_cycles * (double)0.416;
+	double time_ms = time_ns / 1000000;
 	printf("Average cycles %f , time in ns %f\n", avg_cycles, time_ns);
+	printf("Avg time ms : %f\n", time_ms);
 
 }
 

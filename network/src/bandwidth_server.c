@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 	int server_sock, client_sock, client_len;
 	struct sockaddr_in server, client;
 	uint32_t high1, low1, high2, low2;
-	uint64_t start, end;
+	uint64_t start, end, total =0;
 
 	client_len = sizeof(struct sockaddr_in);
 
@@ -54,19 +54,6 @@ int main(int argc, char** argv) {
 	// Max client connection of 3
 	listen(server_sock , 3);
 
-
-	// Allocate buffer to hold data from client
-	uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
-	char* msg = (char*) malloc (BUFFSIZE * sizeof(char));
-	if (!msg) {
-		printf("ERROR: Malloc failed\n");
-		exit(1);
-	}
-
-	memset(msg, '0', BUFFSIZE);
-	uint32_t totalRcvd = 0;
-	int32_t rcvd = 0;
-
 	printf("Server running on port: %d \n", port);
 
 	while(1) {
@@ -80,22 +67,46 @@ int main(int argc, char** argv) {
 			exit(1);
 		}
 
-		START_RDTSC(start);
 
-		while(totalRcvd < BUFFSIZE) {
+		for (int i=0; i<1024; ++i) {
 
-			rcvd = read(client_sock, msg + totalRcvd, BUFFSIZE - totalRcvd);
-			if (rcvd < 0) {
-				printf("ERROR: reading from socket\n");
+			// Allocate buffer to hold data from client
+			uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
+			char* msg = (char*) malloc (BUFFSIZE * sizeof(char));
+			if (!msg) {
+				printf("ERROR: Malloc failed\n");
 				exit(1);
 			}
-			totalRcvd += rcvd;
+
+			memset(msg, '0', BUFFSIZE);
+			uint32_t totalRcvd = 0;
+			int32_t rcvd = 0;
+
+
+			START_RDTSC(start);
+
+			while(totalRcvd < BUFFSIZE) {
+
+				rcvd = read(client_sock, msg + totalRcvd, BUFFSIZE - totalRcvd);
+				if (rcvd < 0) {
+					printf("ERROR: reading from socket\n");
+					exit(1);
+				}
+				totalRcvd += rcvd;
+
+			}
+
+			END_RDTSCP(end);
+			total += (end-start);
+
+			free(msg);
 
 		}
 
-		END_RDTSCP(end);
-
-		printf("Time at server side to get all data : %"PRIu64"\n", (end - start));
+		printf("Time at server side to get all data : %"PRIu64"\n", total);
+		double time_ns = (double)total * 0.416;
+		double time_ms = time_ns / 1000000;
+		printf("The time taken: %f ms\n", time_ms);
 
 		close(client_sock);
 

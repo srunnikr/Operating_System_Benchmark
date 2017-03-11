@@ -45,27 +45,39 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 	printf("Connected to server\n");
 
 	uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
-	char* msg = (char*) malloc (BUFFSIZE);
-	memset(msg, '0', BUFFSIZE);
-	uint64_t start = 0, end = 0;
-	uint32_t sent_bytes = 0;
+	uint64_t total = 0;
 
-	uint64_t bytes_sent = 0;
-	START_RDTSC(start);
-	while (bytes_sent != BUFFSIZE) {
+	for(int i=0; i<1024; ++i) {
 
-		sent_bytes = send(serv_sock, (msg + bytes_sent), (BUFFSIZE - bytes_sent), 0);
-		if (sent_bytes < 0) {
-			perror("Send failed!\n");
-			exit(1);
+		char* msg = (char*) malloc (BUFFSIZE);
+		memset(msg, '0', BUFFSIZE);
+		uint64_t start = 0, end = 0;
+		uint32_t sent_bytes = 0;
+
+		uint64_t bytes_sent = 0;
+		START_RDTSC(start);
+		while (bytes_sent != BUFFSIZE) {
+
+			sent_bytes = send(serv_sock, (msg + bytes_sent), (BUFFSIZE - bytes_sent), 0);
+			if (sent_bytes < 0) {
+				perror("Send failed!\n");
+				exit(1);
+			}
+
+			bytes_sent += sent_bytes;
+
 		}
+		END_RDTSCP(end);
+		total += (end-start);
 
-		bytes_sent += sent_bytes;
+		free(msg);
 
 	}
-	END_RDTSCP(end);
 
-	printf("Cycles taken to transfer data : %"PRIu64"\n", (end- start));
+	printf("Cycles taken to transfer data : %"PRIu64"\n", total);
+	double time_ns = (double)total * 0.416;
+	double time_ms = time_ns / 1000000;
+	printf("The time taken: %f ms\n", time_ms);
 
 	close(serv_sock);
 
