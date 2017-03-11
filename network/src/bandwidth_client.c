@@ -46,6 +46,7 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 
 	uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
 	uint64_t total = 0;
+	uint64_t min = INTMAX_MAX;
 
 	for(int i=0; i<1024; ++i) {
 
@@ -70,14 +71,25 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 		END_RDTSCP(end);
 		total += (end-start);
 
+		if (total < min) {
+			min = total;
+		}
+
+		//printf("Min: %"PRIu64"\n", min);
+
 		free(msg);
 
 	}
 
 	printf("Cycles taken to transfer data : %"PRIu64"\n", total);
-	double time_ns = (double)total * 0.416;
+	double time_ns = (double)min * 0.416;
 	double time_ms = time_ns / 1000000;
 	printf("The time taken: %f ms\n", time_ms);
+	double total_bytes = (double)BUFFSIZE * 1024;
+	double total_MB = total_bytes / (1024 * 1024);
+	double bw = (total_MB) / time_ms;
+	printf("The time taken: %f ms\n", time_ms);
+	printf("Total BW : %f MB/s\n", bw);
 
 	close(serv_sock);
 

@@ -68,11 +68,11 @@ int main(int argc, char** argv) {
 			exit(1);
 		}
 
+		uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
 
 		for (int i=0; i<1024; ++i) {
 
 			// Allocate buffer to hold data from client
-			uint32_t BUFFSIZE = 1024 * 1024; // 1 MB
 			char* msg = (char*) malloc (BUFFSIZE * sizeof(char));
 			if (!msg) {
 				printf("ERROR: Malloc failed\n");
@@ -107,11 +107,13 @@ int main(int argc, char** argv) {
 		printf("Time at server side to get all data : %"PRIu64"\n", total);
 		double time_ns = (double)total * 0.416;
 		double time_ms = time_ns / 1000000;
+		double total_bytes = (double)BUFFSIZE * 1024;
+		double total_MB = total_bytes / (1024 * 1024);
+		double bw = (total_MB) / time_ms;
 		printf("The time taken: %f ms\n", time_ms);
+		printf("Total BW : %f MB/s\n", bw);
 
 		close(client_sock);
-
-		break;
 
 	}
 
