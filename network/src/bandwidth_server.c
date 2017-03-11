@@ -17,13 +17,14 @@
 int main(int argc, char** argv) {
 
 	if (argc < 2) {
-		printf("ERROR : Usage <executable> <port>\n");
+		printf("ERROR : Usage <executable> <ip> <port>\n");
 		exit(1);
 	}
 
 	printf("Starting server\n");
 
-	int port = atoi(argv[1]);
+	int port = atoi(argv[2]);
+	char* ip = argv[1];
 
 	// Create socket descriptors and variables
 	int server_sock, client_sock, client_len;
@@ -41,7 +42,7 @@ int main(int argc, char** argv) {
 
 	server.sin_family = AF_INET;
 	//server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_addr.s_addr = inet_addr("100.81.34.18");
+	server.sin_addr.s_addr = inet_addr(ip);
 	server.sin_port = htons(port);
 
 	// Bind server socket to address
