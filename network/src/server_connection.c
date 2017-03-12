@@ -22,12 +22,13 @@
 
 int main(int argc, char const *argv[]) {
 
-    if (argc < 2) {
-        printf("ERROR : Usage <executable> <port>\n");
+    if (argc != 3) {
+        printf("ERROR : Usage <executable> <ip> <port>\n");
         exit(1);
     }
 
-    int port = atoi(argv[1]);
+    const char* ip = argv[1];
+    int port = atoi(argv[2]);
 
     // Create socket descriptors and variables
     int server_sock, client_sock, client_len;
@@ -45,7 +46,7 @@ int main(int argc, char const *argv[]) {
 
     server.sin_family = AF_INET;
     //server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_addr.s_addr = inet_addr("100.81.34.18");
+    server.sin_addr.s_addr = inet_addr(ip);
     server.sin_port = htons(port);
 
     // Bind server socket to address
@@ -91,6 +92,8 @@ int main(int argc, char const *argv[]) {
         end = calc_reading(high2, low2);
 
 		printf("Connection shutdown cycles : %"PRIu64"\n", (end - start));
+		double time_ns = ((double) (end - start)) * 0.416;
+		printf("Connection shutdown in ns : %f\n", time_ns);
 
         // End the loop, for automation script, we cannot interrupt the process
         break;

@@ -71,8 +71,8 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 		END_RDTSCP(end);
 		total += (end-start);
 
-		if (total < min) {
-			min = total;
+		if ((end - start) < min) {
+			min = (end - start);
 		}
 
 		//printf("Min: %"PRIu64"\n", min);

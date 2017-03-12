@@ -69,6 +69,8 @@ int main(int argc, char const *argv[]) {
     end = calc_reading(high2, low2);
 
     printf("Connection setup cycles : %"PRIu64"\n", (end-start));
+    double time_ns = ((double) (end-start)) * 0.416;
+    printf("Connection setup time in ns : %f\n", time_ns);
 
     start = end = high1 = high2 = low1 = low2 = 0;
 
@@ -93,6 +95,8 @@ int main(int argc, char const *argv[]) {
     end = calc_reading(high2, low2);
 
     printf("Connection close cycles : %"PRIu64"\n", (end-start));
+    time_ns = (double) (end - start) * 0.416;
+    printf("Connection close time in ns: %f\n", time_ns);
 
     return 0;
 
