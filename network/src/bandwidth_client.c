@@ -53,22 +53,19 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 		char* msg = (char*) malloc (BUFFSIZE);
 		memset(msg, '0', BUFFSIZE);
 		uint64_t start = 0, end = 0;
-		uint32_t sent_bytes = 0;
+		uint32_t recv_bytes = 0;
 
-		uint64_t bytes_sent = 0;
 		START_RDTSC(start);
-		while (bytes_sent != BUFFSIZE) {
 
-			sent_bytes = send(serv_sock, (msg + bytes_sent), (BUFFSIZE - bytes_sent), 0);
-			if (sent_bytes < 0) {
-				perror("Send failed!\n");
-				exit(1);
-			}
+		recv_bytes = recv(serv_sock, msg, BUFFSIZE, MSG_WAITALL);
 
-			bytes_sent += sent_bytes;
-
-		}
 		END_RDTSCP(end);
+
+		if (recv_bytes < 0) {
+			perror("Receive failed!\n");
+			exit(1);
+		}
+
 		total += (end-start);
 
 		if ((end - start) < min) {

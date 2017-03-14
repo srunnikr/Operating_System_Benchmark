@@ -80,24 +80,25 @@ int main(int argc, char** argv) {
 			}
 
 			memset(msg, '0', BUFFSIZE);
-			uint32_t totalRcvd = 0;
-			int32_t rcvd = 0;
+			uint32_t totalSent = 0;
+			int32_t sent = 0;
 
 
 			START_RDTSC(start);
 
-			while(totalRcvd < BUFFSIZE) {
+			while(totalSent < BUFFSIZE) {
 
-				rcvd = read(client_sock, msg + totalRcvd, BUFFSIZE - totalRcvd);
-				if (rcvd < 0) {
-					printf("ERROR: reading from socket\n");
+				sent = send(client_sock, msg + totalSent, BUFFSIZE - totalSent, 0);
+				if (sent < 0) {
+					printf("ERROR: sending to socket\n");
 					exit(1);
 				}
-				totalRcvd += rcvd;
+				totalSent += sent;
 
 			}
 
 			END_RDTSCP(end);
+
 			total += (end-start);
 
 			free(msg);
