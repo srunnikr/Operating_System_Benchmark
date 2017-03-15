@@ -1,3 +1,0 @@
-/home/huanzhou/Desktop/cse221_operating_systems/mem/build/CMakeFiles/edit_cache.dir
-/home/huanzhou/Desktop/cse221_operating_systems/mem/build/CMakeFiles/rebuild_cache.dir
-/home/huanzhou/Desktop/cse221_operating_systems/mem/build/CMakeFiles/mem.dir

@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/client_conn.dir/src/client_connection.c.o CMakeFiles/client_conn.dir/src/util.c.o  -o bin/client_conn -rdynamic 

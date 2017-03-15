@@ -1,9 +1,0 @@
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/rebuild_cache.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/main.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/client_rtt.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/client_conn.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/edit_cache.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/server_bw.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/server_rtt.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/server_conn.dir
-/home/huanzhou/Desktop/cse221_operating_systems/network/build/CMakeFiles/client_bw.dir

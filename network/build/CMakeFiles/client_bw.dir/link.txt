@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/client_bw.dir/src/bandwidth_client.c.o CMakeFiles/client_bw.dir/src/util.c.o  -o bin/client_bw -rdynamic 

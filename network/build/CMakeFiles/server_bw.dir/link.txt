@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/server_bw.dir/src/bandwidth_server.c.o CMakeFiles/server_bw.dir/src/util.c.o  -o bin/server_bw -rdynamic 

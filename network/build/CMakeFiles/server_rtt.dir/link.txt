@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/server_rtt.dir/src/rtt_server.c.o CMakeFiles/server_rtt.dir/src/util.c.o  -o bin/server_rtt -rdynamic 

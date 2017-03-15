@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/server_conn.dir/src/server_connection.c.o CMakeFiles/server_conn.dir/src/util.c.o  -o bin/server_conn -rdynamic 
