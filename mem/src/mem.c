@@ -456,9 +456,9 @@ void memory_pagefault(uint64_t loops) {
 int main() {
 
 	printf("Starting measurement\n");
-	//memory_latency(100000);
+	memory_latency(100000);
 	memory_bandwidth(100);
-	//memory_pagefault(1);
+	memory_pagefault(1);
 	printf("Done!\n");
 
 	return 0;

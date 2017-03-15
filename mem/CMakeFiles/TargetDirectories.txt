@@ -1,3 +1,0 @@
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/CMakeFiles/edit_cache.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/CMakeFiles/rebuild_cache.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/mem/CMakeFiles/mem.dir

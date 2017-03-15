@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./bin/mem
+./build/bin/mem

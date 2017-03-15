@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../inc/mem.h
+
+../inc/utils.h
+
+/home/huanzhou/Desktop/cse221_operating_systems/mem/src/mem.c
+stdio.h
+-
+stdlib.h
+-
+unistd.h
+-
+stdint.h
+-
+inttypes.h
+-
+string.h
+-
+fcntl.h
+-
+sys/mman.h
+-
+utils.h
+/home/huanzhou/Desktop/cse221_operating_systems/mem/src/utils.h
+mem.h
+/home/huanzhou/Desktop/cse221_operating_systems/mem/src/mem.h
+

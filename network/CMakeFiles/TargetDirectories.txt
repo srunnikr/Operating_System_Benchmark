@@ -1,9 +1,0 @@
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/rebuild_cache.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/main.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/client_rtt.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/client_conn.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/edit_cache.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/server_bw.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/server_rtt.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/server_conn.dir
-/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/network/CMakeFiles/client_bw.dir

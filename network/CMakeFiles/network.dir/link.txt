@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/network.dir/src/client_connection.c.o CMakeFiles/network.dir/src/util.c.o  -o bin/network -rdynamic 
