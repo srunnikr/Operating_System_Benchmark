@@ -425,7 +425,7 @@ void memory_pagefault(uint64_t loops) {
 
 			// flush disk cache
 			// only apply to Mac OS; change it to an equivalent command in your OS
-			system("sudo purge");	
+//			system("sudo purge");	
 
 			if ((fd = open("test_file", O_RDONLY)) < 0) {
 				printf("can’t open test_file\n");
