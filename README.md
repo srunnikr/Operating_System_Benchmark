@@ -19,24 +19,18 @@ In the home folder:
 Alternatively, you can build and run each test individually. For example, if you
 want to run cpu test, just change to the cpu folder and do the following:
 
-### Building
-
 ```
 cd cpu
 ./build.sh
-```
-### Running tests
-```
 ./run.sh <Number of Iterations>
-```
-Example
-```
-./run.sh 100000
 ```
 
 ## Clean
-No need to clean. When you rebuild the project, the previous version will
-be removed first.
+Run the following command to clean all the existing building files. Most of time,
+this is not necessary.
+```
+./clean_all.sh
+```
 
 # Team members
 
