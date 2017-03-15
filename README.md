@@ -14,10 +14,10 @@ In the home folder:
 ./run_all.sh <Number of Iterations>
 ```
 
-## Runnning specific experiment
+## Running specific experiment
 
 Alternatively, you can build and run each test individually. For example, if you
-want to run cpu test, just change to the cpu folder and do the following:
+want to run cpu test, just do the following:
 
 ```
 cd cpu
