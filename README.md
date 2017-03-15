@@ -6,38 +6,37 @@ OS performance benchmarking project for CSE 221 - Graduate operating systems cou
 
 # Instructions
 
+## Running all experiments
 
-## Running experiment
-
-
+In the home folder:
 ```
-./run.sh <Number of Iterations>
+./build_all.sh
+./run_all.sh <Number of Iterations>
 ```
 
+## Runnning specific experiment
 
-Alternatively if you want to manually do the building process and execution 
-follow the next steps
+Alternatively, you can build and run each test individually. For example, if you
+want to run cpu test, just change to the cpu folder and do the following:
 
-## Building
+### Building
 
 ```
 cd cpu
-make
+./build.sh
 ```
-## Running tests
+### Running tests
 ```
-./run <Number of Iterations>
+./run.sh <Number of Iterations>
 ```
 Example
 ```
-./run 100000
+./run.sh 100000
 ```
 
 ## Clean
-
-```
-make clean
-```
+No need to clean. When you rebuild the project, the previous version will
+be removed first.
 
 # Team members
 
