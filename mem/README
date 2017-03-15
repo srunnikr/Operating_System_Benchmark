@@ -1,12 +1,11 @@
 Steps:
 
-1.	Type ./build.sh to rebuild the project whenever you move the project to
-	a new environment, or you edit the source files.
+1. Run ./build.sh command to build the project when you move the project to
+   a new environment, or when you edit the source files.
 	
-	The configuration files of cmake, as well as the generated Makefile will 
-	be placed in the folder build.
+   The cmake configuration files, as well as the generated Makefile are
+   be placed in the folder build.
 	
-	The executable file will be placed in the folder build/bin. 
+   The executable files are placed in the folder build/bin. 
 
-2.	Type ./run.sh to run the executable file.
-	
+2. Run ./run.sh command to run the test.
