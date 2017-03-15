@@ -1,24 +1,16 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-	echo "Usage ./run <num_iterations>"
-	exit
-fi
-
-echo ""
 echo "========================="
-echo "Running experiments"
+echo "Building source files"
 echo "========================="
-echo ""
 
 echo ""
 echo "-------------------------"
 echo "CPU"
 echo "-------------------------"
-echo ""
 cd cpu
-./run.sh $1
-cd ..
+./build.sh
+cd ../
 
 echo ""
 echo "-------------------------"
@@ -26,8 +18,9 @@ echo "MEMORY"
 echo "-------------------------"
 echo ""
 cd mem
-./run.sh
-cd ..
+./build.sh
+cd ../
+echo ""
 
 echo ""
 echo "-------------------------"
@@ -35,11 +28,6 @@ echo "NETWORK"
 echo "-------------------------"
 echo ""
 cd network
-./run.sh
-cd ..
-
-echo ""
-echo "========================="
-echo "Done!"
-echo "========================="
+./build.sh
+cd ../
 echo ""
