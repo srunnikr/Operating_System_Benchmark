@@ -6,6 +6,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/mman.h>	
+#include <sys/stat.h>
 #include "utils.h"
 #include "mem.h"
 
@@ -413,9 +414,18 @@ void memory_pagefault(uint64_t loops) {
 	uint64_t page_fault_count = 100;	// set page fault times in each loop
 
 	uint64_t start, end, total = 0;
+	uint64_t file_size;
 	int fd;
 	char *fmap; 
 	char read;
+
+	// get the file size
+	// currently the size of test_file is exactly 5 MB = 5120 KB = 1280 * 4KB
+	// so this file has 1280 pages
+	struct stat st;
+	stat("test_file", &st);
+	file_size = st.st_size;
+	printf("The size of testing file is: %"PRIu64" bytes\n", file_size);
 
 	for (uint64_t j = 0; j < loops; j++) {
 		
@@ -423,14 +433,15 @@ void memory_pagefault(uint64_t loops) {
 
 		for(uint64_t i = 0; i < page_fault_count; i++) {
 
-			// flush disk cache
-			// only apply to Mac OS; change it to an equivalent command in your OS
-//			system("sudo purge");	
+			// clear pagecache, dentries and inodes
+//			system("sudo purge");	// apply to MacOS
+			system("echo 3 > /proc/sys/vm/drop_caches");	// apply to Ubuntu
 
 			if ((fd = open("test_file", O_RDONLY)) < 0) {
-				printf("can’t open test_file\n");
+				printf("cannot open test_file\n");
 				exit(1);
 			}
+
 			char *fmap = (char*)mmap(NULL, PAGE_SIZE, PROT_READ, MAP_SHARED, fd, offset);
 			
 			START_RDTSC(start);
@@ -441,7 +452,20 @@ void memory_pagefault(uint64_t loops) {
 			close(fd);
 
 			total += (end - start);
-			offset += PAGE_SIZE;	
+
+			// set offset with some stride to avoid cache on the disk.
+			// although we don't know the size of disk cache, we can still set
+			// the a reasonable stride to testing accuracy.
+			
+			// stride is 4 KB * 1024 = 4 MB
+			offset += PAGE_SIZE * 1024;	
+			
+			// avoid overflow of offset
+			offset %= file_size;		
+
+			// offset should be a multiple of PAGE_SIZE
+			// otherwise segmentation fault will be reported when calling mmap
+			offset = offset / PAGE_SIZE * PAGE_SIZE;
 		}
 	}
 	
