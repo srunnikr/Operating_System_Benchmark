@@ -25,13 +25,6 @@ cd cpu
 ./run.sh <Number of Iterations>
 ```
 
-## Clean
-Run the following command to clean all the existing building files. Most of time,
-this is not necessary.
-```
-./clean_all.sh
-```
-
 # Team members
 
 * Sreejith Unnikrishnan
