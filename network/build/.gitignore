@@ -1,2 +1,2 @@
-# this file is to make sure that the empty build folder will 
-# not be ignored by git.
+# this file is to make the build folder not empty 
+# so that build folder will not be removed
