@@ -420,12 +420,12 @@ void memory_pagefault(uint64_t loops) {
 	char read;
 
 	// get the file size
-	// currently the size of test_file is exactly 5 MB = 5120 KB = 1280 * 4KB
-	// so this file has 1280 pages
+	// note that the testing file should be big enough.
+	// a resonable size is hundreds of megabytes
 	struct stat st;
 	stat("test_file", &st);
 	file_size = st.st_size;
-	printf("The size of testing file is: %"PRIu64" bytes\n", file_size);
+	printf("The size of the testing file is: %"PRIu64" bytes\n", file_size);
 
 	for (uint64_t j = 0; j < loops; j++) {
 		
@@ -455,13 +455,14 @@ void memory_pagefault(uint64_t loops) {
 
 			// set offset with some stride to avoid cache on the disk.
 			// although we don't know the size of disk cache, we can still set
-			// the a reasonable stride to testing accuracy.
+			// the a reasonable stride to improve measurement accuracy.
+			// our tests show that setting a large stride is very important.
 			
 			// stride is 4 KB * 1024 = 4 MB
 			offset += PAGE_SIZE * 1024;	
 			
 			// avoid overflow of offset
-			offset %= file_size;		
+			offset %= file_size;
 
 			// offset should be a multiple of PAGE_SIZE
 			// otherwise segmentation fault will be reported when calling mmap
