@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/fs/src/fs.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+unistd.h
+-
+inttypes.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+utils.h
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/fs/src/utils.h
+
+/home/sreejith/Dropbox/CSE221 Operating Systems/Project/repo/cse221_operating_systems/fs/src/utils.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+unistd.h
+-
+inttypes.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+
+inc/utils.h
+
