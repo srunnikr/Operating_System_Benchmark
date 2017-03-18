@@ -60,7 +60,7 @@ void file_read_time_sequential(const char* filename) {
     }
     double avg = (double)total / (double)loop_count;
     double time_ns = avg * 0.416;
-    printf("Average time for sequential read of the blocks %f ns\n", time_ns);
+    printf("Average time for sequential read of the block %f ns\n", time_ns);
 
 }
 
