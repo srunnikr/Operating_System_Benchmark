@@ -425,7 +425,7 @@ void memory_pagefault(uint64_t loops) {
 	struct stat st;
 	stat("test_file", &st);
 	file_size = st.st_size;
-	printf("The size of the testing file is: %"PRIu64" bytes\n", file_size);
+	printf("Size of the testing file: %"PRIu64" bytes\n", file_size);
 
 	for (uint64_t j = 0; j < loops; j++) {
 		
@@ -481,7 +481,7 @@ void memory_pagefault(uint64_t loops) {
 int main() {
 
 	printf("Starting measurement\n");
-	memory_latency(100000);
+//	memory_latency(100000);
 	memory_bandwidth(100);
 	memory_pagefault(1);
 	printf("Done!\n");
