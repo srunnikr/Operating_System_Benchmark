@@ -1,0 +1,13 @@
+Steps:
+
+1. Run ./build.sh command to build the project when you move the project to
+   a new environment, or when you edit the source files.
+	
+   The cmake configuration files, as well as the generated Makefile are
+   be placed in the folder build.
+	
+   The executable files are placed in the folder build/bin. 
+
+   The generated test files are placed in the folder testfiles.
+
+2. Run ./run.sh command to run the test.
