@@ -31,12 +31,14 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
     server.sin_family = AF_INET;
     server.sin_port = htons(server_port);
 
+	// Create socket
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (serv_sock < 0) {
 		perror("ERROR : Socket creation has failed\n");
 		exit(1);
 	}
 
+	// Connect to server
 	if (connect(serv_sock, (struct sockaddr*) &server, sizeof(server)) < 0) {
         perror("ERROR: Connect failed\n");
         exit(1);
@@ -48,6 +50,7 @@ void bandwidth_test_local_client(const char* server_ip, uint16_t server_port) {
 	uint64_t total = 0;
 	uint64_t min = INTMAX_MAX;
 
+	// Do the experiment
 	for(int i=0; i<1024; ++i) {
 
 		char* msg = (char*) malloc (BUFFSIZE);

@@ -28,6 +28,7 @@ void start_client(char* ip, uint16_t port) {
 	uint64_t count = 10000;
 	char c = 'a';
 
+	// Create the socket and connect to server
 	int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (serv_sock < 0) {
 		perror("ERROR : Socket creation has failed\n");
@@ -78,7 +79,3 @@ int main(int argc, char** argv) {
 	return 0;
 
 }
-
-
-
-

@@ -86,6 +86,7 @@ int main(int argc, char** argv) {
 
 			START_RDTSC(start);
 
+			// Send data till BUFFSIZE
 			while(totalSent < BUFFSIZE) {
 
 				sent = send(client_sock, msg + totalSent, BUFFSIZE - totalSent, 0);
