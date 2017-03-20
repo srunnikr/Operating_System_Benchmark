@@ -1,0 +1,5 @@
+# ignore large test file in this folder
+large_file
+
+# ignore testfiles folder
+./testfiles
