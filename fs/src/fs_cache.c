@@ -103,11 +103,37 @@ int main(int argc, char const *argv[]) {
 	double time_ns, time_per_block;
 	uint64_t total_blocks, read_size_MB;
 
+	printf("Start to test file access from 1 GB to 13 GB:\n");
+
 	for (uint64_t i = 0; i < array_size; i++) {
 		time_ns = file_read_cache(filename, read_size[i]);
 		total_blocks = read_size[i] / BLOCKSIZE;
 		time_per_block = time_ns / total_blocks;
 		read_size_MB = read_size[i] / (1024 * 1024);
+
+		printf("read size (MB): %"PRIu64", average time per block (ns): %f\n",
+				read_size_MB, time_per_block);
+	}
+
+	// We find that on the testing machine with 16 GB memory,
+	// the cache size is between 9 G to 10 G.
+	// So we did the following test to get a more accurate result.
+
+	uint64_t array_size_2 = 10;
+	uint64_t read_size_2[array_size_2];
+
+	// set read size from 9 GB to 10 GB, with the stride of 0.1 GB = 102.4 MB
+	for (uint64_t i = 0; i < array_size_2; i++) {
+		read_size_2[i] = (9 + 0.1*(i + 1)) * 1024 * 1024 * 1024;
+	}
+
+	printf("Start to test file access from 9 GB to 10 GB:\n");
+	
+	for (uint64_t i = 0; i < array_size_2; i++) {
+		time_ns = file_read_cache(filename, read_size_2[i]);
+		total_blocks = read_size_2[i] / BLOCKSIZE;
+		time_per_block = time_ns / total_blocks;
+		read_size_MB = read_size_2[i] / (1024 * 1024);
 
 		printf("read size (MB): %"PRIu64", average time per block (ns): %f\n",
 				read_size_MB, time_per_block);
