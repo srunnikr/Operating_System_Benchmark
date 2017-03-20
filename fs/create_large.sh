@@ -2,11 +2,15 @@
 
 # create a large file
 FILE="large_file"
-if [ ! -f $FILE ]; then
-	echo ""
-	echo "large test file does not exist"
-	echo "start creating a 10 GB test file (may take a few minutes)..."
-	head -c 10737418240 < /dev/urandom > test_file
-	echo "test file is created"
-	echo ""
+if [ -f $FILE ]; then
+	echo "remove old test file..."
+	rm large_file
 fi
+	
+echo "start creating a large test file (may take a few minutes)..."
+# create a 5G file
+#head -c 5368709120 < /dev/urandom > large_file
+# create a 10G file
+head -c 10737418240 < /dev/urandom > large_file
+echo "large file is created"
+echo ""

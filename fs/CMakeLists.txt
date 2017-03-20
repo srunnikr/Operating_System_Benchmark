@@ -7,8 +7,7 @@ include_directories(inc)
 file(GLOB SOURCES src/*.c)
 
 set( FS_SRC
-    src/fs.c
-    src/utils.c
+    src/fs_cache.c
 )
 
 set(GCC_COVERAGE_COMPILE_FLAGS "-ggdb")
