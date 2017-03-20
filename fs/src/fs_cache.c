@@ -91,12 +91,13 @@ int main(int argc, char const *argv[]) {
 	const char* filename = argv[1];
 	printf("filename is: %s\n", filename);
 
-	uint64_t array_size = 10;
+	uint64_t array_size = 13;
 	uint64_t read_size[array_size];
 
-	// set read size to megabytes
+	// set read size to gigabytes
+	// test from 1 GB to 13 GB
 	for (uint64_t i = 0; i < array_size; i++) {
-		read_size[i] = (i+1) * 1024 * 1024 * 1024;
+		read_size[i] = (i + 1) * 1024 * 1024 * 1024;
 	}
 
 	double time_ns, time_per_block;
