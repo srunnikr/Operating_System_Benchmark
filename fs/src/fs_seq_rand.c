@@ -20,7 +20,7 @@ void fs_sequential(const char* filename) {
 
 	// flush memory cache before each testing
 	system("echo 3 > /proc/sys/vm/drop_caches");
-    
+
 	uint32_t fd = open(filename, O_RDONLY);
     if (posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED) < 0) {
         printf("Setting POSIX flag failed\n");
@@ -34,7 +34,7 @@ void fs_sequential(const char* filename) {
 	if (num_blocks == 0) {
 		num_blocks = 1;
 	}
-    
+
     char* buf = (char*)malloc(4*1024);
 
     START_RDTSC(start);
@@ -69,7 +69,8 @@ void fs_random(const char* filename) {
 
 	// flush memory cache before each testing
 	system("echo 3 > /proc/sys/vm/drop_caches");
-    
+
+    // Tell scheduler we don`t cache the file
     uint32_t fd = open(filename, O_RDONLY);
     if (posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED) < 0) {
         printf("Setting POSIX flag failed\n");
@@ -83,7 +84,8 @@ void fs_random(const char* filename) {
 	if (num_blocks == 0) {
 		num_blocks = 1;
 	}
-    
+
+    // Buffer of block size
 	char* buf = (char*)malloc(4*1024);
 
     START_RDTSC(start);

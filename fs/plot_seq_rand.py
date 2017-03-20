@@ -17,7 +17,7 @@ plt.legend(['sequential', 'random'], loc='upper left',prop={'size':20})
 plt.xlabel("File size (log 2)", fontsize=25)
 plt.ylabel("Average per block access time (us)", fontsize=25)
 
-plt.title("File system sequential read", fontsize=25)
+plt.title("File system sequential/random read test", fontsize=25)
 
 plt.tick_params(axis="both", which="major", labelsize=23)
 plt.tick_params(axis="both", which="minor", labelsize=23)
