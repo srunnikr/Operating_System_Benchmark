@@ -77,7 +77,7 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 	close(fd);
 	free(data_buff);
 
-	double time_ns = total_cycles * 0.370;
+	double time_ns = total_cycles * 0.416;
 	return time_ns;
 }
 
