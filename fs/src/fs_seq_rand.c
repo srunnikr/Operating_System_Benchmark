@@ -12,8 +12,8 @@
 void fs_sequential(const char* filename) {
 
     uint64_t num_blocks, start, end;
-    size_t block_size;
-    blksize_t file_size;
+    blksize_t block_size;
+    off_t file_size;
     uint32_t loop_count = 1, temp;
     uint64_t readings[loop_count];
     memset(readings, 0, loop_count);
@@ -61,8 +61,8 @@ void fs_sequential(const char* filename) {
 void fs_random(const char* filename) {
 
     uint64_t num_blocks, start, end;
-    size_t block_size;
-    blksize_t file_size;
+    blksize_t block_size;
+    off_t file_size;
     uint32_t loop_count = 1, temp;
     uint64_t readings[loop_count];
     memset(readings, 0, loop_count);
