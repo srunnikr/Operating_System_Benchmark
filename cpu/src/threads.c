@@ -41,7 +41,7 @@ void measure_thread_creation(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/thread_creation.txt", "w+");
+    // FILE* fp = fopen("logs/thread_creation.txt", "w+");
 
 	pthread_t thread;
 
@@ -83,7 +83,7 @@ void measure_thread_creation(int iterations) {
 	}
 
     for(int i=0; i<iterations; ++i) {
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
 	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 10000, 5000);
@@ -92,7 +92,7 @@ void measure_thread_creation(int iterations) {
 	fflush(NULL);	// flush everything in the buffer, otherwise other threads
 					// will share the same buffer, which may go wrong in redirection
 
-	fclose(fp);
+	// fclose(fp);
 	free(ticks);
 }
 
@@ -101,7 +101,7 @@ void measure_thread_switch(int iterations) {
 	uint64_t start = 0, end = 0;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/thread_switch.txt", "w+");
+    // FILE* fp = fopen("logs/thread_switch.txt", "w+");
 
 	if(pipe(fd) != 0) {
 		printf("fail to create pipe in thread switch\n");
@@ -124,12 +124,12 @@ void measure_thread_switch(int iterations) {
 
 		pthread_join(thread, NULL);
 		read(fd[0], (void*)&end, sizeof(uint64_t));
-		
+
 		ticks[i] = (end - start);
 	}
 
     for(int i=0; i<iterations; ++i) {
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
 	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 10000, 5000);
@@ -138,6 +138,6 @@ void measure_thread_switch(int iterations) {
 	fflush(NULL);	// flush everything in the buffer, otherwise other threads
 					// will share the same buffer, which may go wrong in redirection
 
-	fclose(fp);
+	// fclose(fp);
 	free(ticks);
 }

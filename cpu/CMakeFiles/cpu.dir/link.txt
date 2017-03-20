@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/cpu.dir/src/main.c.o CMakeFiles/cpu.dir/src/procedure_call.c.o CMakeFiles/cpu.dir/src/process.c.o CMakeFiles/cpu.dir/src/threads.c.o CMakeFiles/cpu.dir/src/syscall.c.o CMakeFiles/cpu.dir/src/utils.c.o  -o build/bin/cpu -rdynamic -lm -lpthread 

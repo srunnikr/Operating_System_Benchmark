@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/fs_seq.dir/src/fs_seq.c.o CMakeFiles/fs_seq.dir/src/utils.c.o  -o bin/fs_seq -rdynamic 

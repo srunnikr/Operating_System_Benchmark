@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/fs_cache.dir/src/fs_cache.c.o  -o bin/fs_cache -rdynamic 

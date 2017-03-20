@@ -1,0 +1,1 @@
+/usr/bin/cc     CMakeFiles/fs_seq_rand.dir/src/fs_seq_rand.c.o CMakeFiles/fs_seq_rand.dir/src/utils.c.o  -o bin/fs_seq_rand -rdynamic 

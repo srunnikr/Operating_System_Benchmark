@@ -31,7 +31,7 @@ void measure_syscalls(int iterations) {
 
     uint64_t ticks[iterations];
     memset(ticks, 0, iterations*sizeof(uint64_t));
-	FILE *fp = fopen("logs/syscalls.txt","w+");
+	//FILE *fp = fopen("logs/syscalls.txt","w+");
 
     for(i=0; i<iterations; ++i) {
 
@@ -63,15 +63,15 @@ void measure_syscalls(int iterations) {
     uint64_t sum = 0;
     for(int i=0; i<iterations; ++i) {
         sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
     //double avg = (double) sum / (double) iterations;
     int avg_int = (int)calc_average(ticks, iterations, -1, -1, 100);
     printf("SYSCALLS : Average cycles = %d\n\n", avg_int);
 
-	fflush(NULL);
-	fclose(fp);
+	// fflush(NULL);
+	// fclose(fp);
 
 }
 

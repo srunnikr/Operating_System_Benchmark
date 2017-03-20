@@ -31,3 +31,13 @@ cd network
 ./build.sh
 cd ../
 echo ""
+
+echo ""
+echo "-------------------------"
+echo "FILE SYSTEM"
+echo "-------------------------"
+echo ""
+cd fs
+./build.sh
+cd ../
+echo ""

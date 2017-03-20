@@ -1,0 +1,5 @@
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/CMakeFiles/edit_cache.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/CMakeFiles/fs_seq_rand.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/CMakeFiles/fs_con.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/CMakeFiles/fs_cache.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/CMakeFiles/rebuild_cache.dir

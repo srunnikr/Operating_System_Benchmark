@@ -1,0 +1,3 @@
+/home/sreejith/coding/repo_test/cse221_operating_systems/cpu/CMakeFiles/rebuild_cache.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/cpu/CMakeFiles/edit_cache.dir
+/home/sreejith/coding/repo_test/cse221_operating_systems/cpu/CMakeFiles/cpu.dir

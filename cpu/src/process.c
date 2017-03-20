@@ -19,11 +19,11 @@
 #include "utils.h"
 
 void measure_process_creation(int iterations) {
-	
+
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-	FILE* fp = fopen("logs/process_creation.txt","w+");
+	// FILE* fp = fopen("logs/process_creation.txt","w+");
 
 	for(int i=0; i<iterations; ++i) {
 
@@ -51,8 +51,8 @@ void measure_process_creation(int iterations) {
 		}else if (pid == 0) {
 			// we are in child
 			exit(0);
-		} 
-		
+		}
+
 		wait(NULL);
 
 		uint64_t tick1 = ((uint64_t)high1 << 32) | low1;
@@ -62,31 +62,31 @@ void measure_process_creation(int iterations) {
 	}
 
 	for(int i=0; i<iterations; ++i) {
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
 	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 200000, 50000);
 	printf("PROCESS_CREATION : Average cycles = %"PRIu64"\n\n", average);
-	
+
 	fflush(NULL);
 
-	fclose(fp);
+	// fclose(fp);
 	free(ticks);
 }
 
 void measure_process_switch(int iterations) {
-	
+
 	uint64_t start = 0, end = 0;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-	FILE* fp = fopen("logs/process_switch.txt","w+");
+	// FILE* fp = fopen("logs/process_switch.txt","w+");
 
 	int fd[2];
 	if(pipe(fd) != 0) {
 		printf("fail to create pipe in process switch!\n");
 		exit(1);
 	}
-		
+
 	for(int i=0; i<iterations; ++i) {
 
 		pid_t pid;
@@ -105,12 +105,12 @@ void measure_process_switch(int iterations) {
 			write(fd[1], (void*)&end, sizeof(uint64_t));
 			exit(0);
 		}
-			
+
 		ticks[i] = (end - start);
 	}
 
 	for(int i=0; i<iterations; ++i) {
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
 	uint64_t average = (uint64_t)calc_average(ticks, iterations, 0, 300000, 50000);
@@ -118,6 +118,6 @@ void measure_process_switch(int iterations) {
 
 	fflush(NULL);
 
-	fclose(fp);
+	// fclose(fp);
 	free(ticks);
 }

@@ -51,7 +51,7 @@ void measure_procedure_0arg(int iterations) {
     uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure0.txt", "w+");
+    // FILE* fp = fopen("logs/procedure0.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -87,16 +87,16 @@ void measure_procedure_0arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
         sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // // fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
     printf("FUNC 0 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // // fprintf(fp, "%f", avg);
+	// // fflush(NULL);
+    // // fclose(fp);
 	free(ticks);
 
 }
@@ -106,7 +106,7 @@ void measure_procedure_1arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure1.txt", "w+");
+    // FILE* fp = fopen("logs/procedure1.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -140,16 +140,16 @@ void measure_procedure_1arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
         sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
     }
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
     printf("FUNC 1 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
+    // fclose(fp);
 	free(ticks);
 
 }
@@ -159,7 +159,7 @@ void measure_procedure_2arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure2.txt", "w+");
+    // FILE* fp = fopen("logs/procedure2.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -193,16 +193,16 @@ void measure_procedure_2arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
     printf("FUNC 2 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
+    // fclose(fp);
 	free(ticks);
 
 }
@@ -212,7 +212,7 @@ void measure_procedure_3arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure3.txt", "w+");
+    // FILE* fp = fopen("logs/procedure3.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -246,16 +246,16 @@ void measure_procedure_3arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
     printf("FUNC 3 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
+    // fclose(fp);
 	free(ticks);
 
 }
@@ -265,7 +265,7 @@ void measure_procedure_4arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure4.txt", "w+");
+    // FILE* fp = fopen("logs/procedure4.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -299,17 +299,17 @@ void measure_procedure_4arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
 	printf("FUNC 4 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
 	free(ticks);
-    fclose(fp);
+    // fclose(fp);
 
 }
 
@@ -318,7 +318,7 @@ void measure_procedure_5arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure5.txt", "w+");
+    // FILE* fp = fopen("logs/procedure5.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -352,17 +352,17 @@ void measure_procedure_5arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
 	printf("FUNC 5 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
 	free(ticks);
-    fclose(fp);
+    // fclose(fp);
 
 }
 
@@ -371,7 +371,7 @@ void measure_procedure_6arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure6.txt", "w+");
+    // FILE* fp = fopen("logs/procedure6.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -405,16 +405,16 @@ void measure_procedure_6arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
 	printf("FUNC 6 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
+    // fclose(fp);
 	free(ticks);
 
 }
@@ -424,7 +424,7 @@ void measure_procedure_7arg(int iterations) {
 	uint32_t high1, low1, high2, low2;
 	uint64_t* ticks = (uint64_t*) malloc (sizeof(uint64_t) * iterations);
 	memset(ticks, 0, iterations * sizeof(uint64_t));
-    FILE* fp = fopen("logs/procedure7.txt", "w+");
+    // FILE* fp = fopen("logs/procedure7.txt", "w+");
 
 	uint64_t start, stop;
 
@@ -458,16 +458,16 @@ void measure_procedure_7arg(int iterations) {
 	uint64_t sum = 0;
 	for(int i=0; i<iterations; ++i) {
 		sum += ticks[i];
-        fprintf(fp, "%"PRIu64"\n", ticks[i]);
+        // fprintf(fp, "%"PRIu64"\n", ticks[i]);
 	}
 
     //double_t avg = (double_t) sum / (double_t) iterations;
 	double avg = calc_average(ticks, iterations, -1, 50, 50);
     printf("FUNC 7 ARGS : Average cycles = %f\n\n", avg);
 
-    fprintf(fp, "%f", avg);
-	fflush(NULL);
-    fclose(fp);
+    // fprintf(fp, "%f", avg);
+	// fflush(NULL);
+    // fclose(fp);
 	free(ticks);
 
 }

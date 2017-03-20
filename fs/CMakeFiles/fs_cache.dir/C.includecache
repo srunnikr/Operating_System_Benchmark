@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/src/fs_cache.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+unistd.h
+-
+inttypes.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+utils.h
+/home/sreejith/coding/repo_test/cse221_operating_systems/fs/src/utils.h
+
+inc/utils.h
+

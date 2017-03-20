@@ -39,6 +39,15 @@ cd network
 cd ..
 
 echo ""
+echo "-------------------------"
+echo "FILE SYSTEM"
+echo "-------------------------"
+echo ""
+cd fs
+./run.sh
+cd ..
+
+echo ""
 echo "========================="
 echo "Done!"
 echo "========================="
