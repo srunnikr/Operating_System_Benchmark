@@ -42,7 +42,7 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 
 	// read again for loop_count times, compute the average
 	total_time = 0;
-	for (uint64_t i = 0; i < loop_count; ++i) {
+	for (uint64_t i = 0; i < loop_count; i++) {
 		
 		int fd = open(filename, O_RDONLY);
 		if (fd < 0) {
@@ -56,22 +56,24 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 			exit(1);
 		}
 
-		START_RDTSC(start);
-		for (uint64_t j = 0; j < read_count; i++) {
+		for (uint64_t j = 0; j < read_count; j++) {
+
+			START_RDTSC(start);
 			read_bytes = read(fd, data_buff, BLOCKSIZE);
+			END_RDTSCP(end);
+			
+			total_time = (end - start);
 			if(read_bytes <= 0) break;
 		}
-		END_RDTSCP(end);
 
-		total_time = (end - start);
 		close(fd);
 	}
 
 	free(data_buff);
 
 	double avg_time = (double)total_time / (double)loop_count;
-	double time_ns = avg_time * 0.370;
-//	double time_ns = avg * 0.416;
+//	double time_ns = avg_time * 0.370;
+	double time_ns = avg_time * 0.416;
 
 	return time_ns;
 }
@@ -85,7 +87,7 @@ int main(int argc, char const *argv[]) {
 
 	const char* filename = argv[1];
 
-	uint64_t array_size = 8;
+	uint64_t array_size = 13;
 	uint64_t read_size[array_size];
 
 	// set read size to gigabytes
