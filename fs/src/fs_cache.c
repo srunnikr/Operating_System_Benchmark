@@ -15,7 +15,8 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 
 	uint64_t start, end, total_cycles;
 
-	system("echo 3 > /proc/sys/vm/drop_caches");	// apply to Ubuntu
+	// flush cache for each testing
+	system("echo 3 > /proc/sys/vm/drop_caches");
 	
 	// first read, load the file to memory 
 	int fd = open(filename, O_RDONLY);
@@ -36,8 +37,8 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 	
 	for (uint64_t i = 0; i < read_count; i++) {
 		read_bytes = read(fd, data_buff, BLOCKSIZE);
-		if(read_bytes <= 0) {
-			printf("i = %"PRIu64", read return: %lu\n", i, read_bytes);
+		if (read_bytes <= 0) {
+			printf("read return wrong\n");
 			exit(1);
 		}
 	}
@@ -65,18 +66,18 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 		read_bytes = read(fd, data_buff, BLOCKSIZE);
 		END_RDTSCP(end);
 		
-		total_cycles = (end - start);
-		if(read_bytes <= 0) break;
+		if (read_bytes <= 0) {
+			printf("read return wrong\n");
+			exit(1);
+		}
+		
+		total_cycles += (end - start);
 	}
 
 	close(fd);
-
 	free(data_buff);
 
 	double time_ns = total_cycles * 0.370;
-	
-	printf("total_cycles = %"PRIu64" \n", total_cycles);
-
 	return time_ns;
 }
 
@@ -95,7 +96,7 @@ int main(int argc, char const *argv[]) {
 
 	// set read size to megabytes
 	for (uint64_t i = 0; i < array_size; i++) {
-		read_size[i] = (i+1)*10*1024*1024;
+		read_size[i] = (i+1) * 1024 * 1024 * 1024;
 	}
 
 	double time_ns, time_per_block;
