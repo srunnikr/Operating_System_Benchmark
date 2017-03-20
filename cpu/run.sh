@@ -5,7 +5,7 @@ fi
 
 echo ""
 echo "==========================="
-echo "Staring CPU experiment"
+echo "Starting CPU experiment"
 echo "==========================="
 echo ""
 

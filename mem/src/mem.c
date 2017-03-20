@@ -12,7 +12,7 @@
 
 void memory_latency(uint32_t loop_count) {
 
-	printf("Starting memory latency test...\n");
+	printf("\nStarting memory latency test...\n");
 	
 	uint32_t loops = loop_count;
 
@@ -32,6 +32,7 @@ void memory_latency(uint32_t loop_count) {
 
 
 	// Stride length increases in a power of 2
+	// Stride length is the length of array index, instead of bytes  
 	for (stride_len = 1; stride_len < (2<<16); stride_len *= 2) {
 
 		// For each stride, allocate arrays of different sizes
@@ -86,7 +87,7 @@ void memory_bandwidth(uint64_t loops) {
 	/*
 	 * This test will measure the memory bandwidth of the system
 	 * */
-	printf("Starting memory bandwidth test...\n");
+	printf("\nStarting memory bandwidth test...\n");
 
 	uint64_t start, end;
 
@@ -244,13 +245,13 @@ void memory_bandwidth(uint64_t loops) {
 
 	// from cpu experiment 1 cycle = 0.416 ns
 
-	uint64_t total_read_size = loops * arr_size;
-	double total_read_size_MB = (double) (8 * total_read_size) / (1024 * 1024);
+	uint64_t total_read_size_B = loops * arr_size * 8;
+	double total_read_size_MB = (double) total_read_size_B / (1024 * 1024);
 	double total_time = (double) total * 0.416 * 1e-9;
 	read_bandwidth = total_read_size_MB / total_time;
 
-	printf("Total read size : %"PRIu64" and total time in s :%f\n", total_read_size, total_time);
-	printf("Read bandwidth : %f\n", read_bandwidth);
+	printf("Total read size (MB): %d, total time (s): %f\n", (int)total_read_size_MB, total_time);
+	printf("Read bandwidth (MB/s): %f\n", read_bandwidth);
 
 
 	// write bandwidth
@@ -393,14 +394,13 @@ void memory_bandwidth(uint64_t loops) {
 		total += (end - start);
 	}
 
-	uint64_t total_write_size = loops * arr_size;
-	double total_write_size_MB = (double) (8 * total_write_size) / (1024 * 1024);
+	uint64_t total_write_size_B = loops * arr_size * 8;
+	double total_write_size_MB = (double) total_write_size_B / (1024 * 1024);
 	total_time = (double)total * 0.416 * 1e-9;
 	write_bandwidth = total_write_size_MB / total_time;
 
-	printf("Total write size : %"PRIu64" and total time in s :%f\n", total_write_size, total_time);
-	printf("Write bandwidth : %f\n", write_bandwidth);
-
+	printf("Total write size (MB): %d and total time (s): %f\n", (int)total_write_size_MB, total_time);
+	printf("Write bandwidth (MB/s): %f\n", write_bandwidth);
 
 	// free memory
 	free(arr);
@@ -408,7 +408,7 @@ void memory_bandwidth(uint64_t loops) {
 
 void memory_pagefault(uint64_t loops) {
 
-	printf("Starting memory page fault test...\n");
+	printf("\nStarting memory page fault test...\n");
 	
 	uint64_t PAGE_SIZE = 4096;			// confirm this in your machine
 	uint64_t page_fault_count = 100;	// set page fault times in each loop
@@ -425,7 +425,7 @@ void memory_pagefault(uint64_t loops) {
 	struct stat st;
 	stat("test_file", &st);
 	file_size = st.st_size;
-	printf("Size of the testing file: %"PRIu64" bytes\n", file_size);
+	printf("Size of the testing file (bytes): %"PRIu64"\n", file_size);
 
 	for (uint64_t j = 0; j < loops; j++) {
 		
@@ -473,7 +473,7 @@ void memory_pagefault(uint64_t loops) {
 	uint64_t total_pagefaults = loops * page_fault_count;
 	double avg_cycles = (double)total / (double)total_pagefaults;
 
-	printf("Average page fault service cycles : %f\n", avg_cycles); 
+	printf("Average page fault service time (cycles): %f\n", avg_cycles); 
 
 }
 
@@ -481,7 +481,7 @@ void memory_pagefault(uint64_t loops) {
 int main() {
 
 	printf("Starting measurement\n");
-//	memory_latency(100000);
+	memory_latency(100000);
 	memory_bandwidth(100);
 	memory_pagefault(1);
 	printf("Done!\n");
