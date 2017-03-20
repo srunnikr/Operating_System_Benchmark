@@ -15,6 +15,7 @@ then
 	done
 fi
 
+# start process 0, which will print time
 echo "start process 0, reading file f64MB_0.txt"
 sudo taskset -c 0 nice -n -20 ./build/bin/fs_con "$PWD/testfiles_con/f64MB_0.txt" 1 &
 
