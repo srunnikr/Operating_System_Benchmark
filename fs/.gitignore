@@ -2,4 +2,4 @@
 large_file
 
 # ignore testfiles folder
-./testfiles
+testfiles/*
