@@ -8,9 +8,11 @@ if [ -f $FILE ]; then
 fi
 	
 echo "start creating a large test file (may take a few minutes)..."
+# create a 100M file
+head -c 104857600 < /dev/urandom > large_file
 # create a 5G file
 #head -c 5368709120 < /dev/urandom > large_file
 # create a 10G file
-head -c 10737418240 < /dev/urandom > large_file
+#head -c 10737418240 < /dev/urandom > large_file
 echo "large file is created"
 echo ""

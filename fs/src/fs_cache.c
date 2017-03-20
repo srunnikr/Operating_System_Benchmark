@@ -13,9 +13,10 @@
 
 double file_read_cache(const char* filename, uint64_t read_size) {
 
-	uint64_t start, end, total_time;
-	uint64_t loop_count = 100;
+	uint64_t start, end, total_cycles;
 
+	system("echo 3 > /proc/sys/vm/drop_caches");	// apply to Ubuntu
+	
 	// first read, load the file to memory 
 	int fd = open(filename, O_RDONLY);
 	if (fd < 0) {
@@ -35,45 +36,46 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 	
 	for (uint64_t i = 0; i < read_count; i++) {
 		read_bytes = read(fd, data_buff, BLOCKSIZE);
+		if(read_bytes <= 0) {
+			printf("i = %"PRIu64", read return: %lu\n", i, read_bytes);
+			exit(1);
+		}
+	}
+
+	close(fd);
+
+	// second read, should use file system cache
+	total_cycles = 0;
+		
+	fd = open(filename, O_RDONLY);
+	if (fd < 0) {
+		printf("ERROR while opening the file\n");
+		exit(1);
+	}
+
+	// set POSIX_FADV_WILLNEED
+	if (posix_fadvise(fd, 0, read_size, POSIX_FADV_WILLNEED) < 0) {
+		printf("Setting POSIX flag failed\n");
+		exit(1);
+	}
+
+	for (uint64_t j = 0; j < read_count; j++) {
+
+		START_RDTSC(start);
+		read_bytes = read(fd, data_buff, BLOCKSIZE);
+		END_RDTSCP(end);
+		
+		total_cycles = (end - start);
 		if(read_bytes <= 0) break;
 	}
 
 	close(fd);
 
-	// read again for loop_count times, compute the average
-	total_time = 0;
-	for (uint64_t i = 0; i < loop_count; i++) {
-		
-		int fd = open(filename, O_RDONLY);
-		if (fd < 0) {
-			printf("ERROR while opening the file\n");
-			exit(1);
-		}
-
-		// set POSIX_FADV_WILLNEED
-		if (posix_fadvise(fd, 0, read_size, POSIX_FADV_WILLNEED) < 0) {
-			printf("Setting POSIX flag failed\n");
-			exit(1);
-		}
-
-		for (uint64_t j = 0; j < read_count; j++) {
-
-			START_RDTSC(start);
-			read_bytes = read(fd, data_buff, BLOCKSIZE);
-			END_RDTSCP(end);
-			
-			total_time = (end - start);
-			if(read_bytes <= 0) break;
-		}
-
-		close(fd);
-	}
-
 	free(data_buff);
 
-	double avg_time = (double)total_time / (double)loop_count;
-//	double time_ns = avg_time * 0.370;
-	double time_ns = avg_time * 0.416;
+	double time_ns = total_cycles * 0.370;
+	
+	printf("total_cycles = %"PRIu64" \n", total_cycles);
 
 	return time_ns;
 }
@@ -86,13 +88,14 @@ int main(int argc, char const *argv[]) {
 	}
 
 	const char* filename = argv[1];
+	printf("filename is: %s\n", filename);
 
-	uint64_t array_size = 13;
+	uint64_t array_size = 10;
 	uint64_t read_size[array_size];
 
-	// set read size to gigabytes
+	// set read size to megabytes
 	for (uint64_t i = 0; i < array_size; i++) {
-		read_size[i] = (i + 1) * 1024 * 1024 * 1024;
+		read_size[i] = (i+1)*10*1024*1024;
 	}
 
 	double time_ns, time_per_block;
