@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include "utils.h"
 
-void file_read_time_sequential(const char* filename) {
+void file_cache(const char* filename) {
     uint64_t num_blocks, start, end;
     size_t block_size;
     blksize_t file_size;
@@ -17,16 +17,25 @@ void file_read_time_sequential(const char* filename) {
     uint64_t readings[loop_count];
     memset(readings, 0, loop_count);
 
-    for (int i=0; i<loop_count; ++i) {
+    for (int i = 0; i < loop_count; ++i) {
         uint32_t fd = open(filename, O_RDONLY);
         file_size = get_file_size(fd);
         block_size = get_block_size(fd);
-        num_blocks = file_size / block_size;
+		
+		if(block_size == 0) {
+			printf("block_size is 0, please check whether the file exists.");
+			exit(1);
+		}
+		
+		num_blocks = file_size / block_size;
+		if(num_blocks == 0) {
+			num_blocks = 1;
+		}
 
         // Print stats first time
         if (i == 0) {
-            printf("File size : %lu\n", file_size);
-            printf("Block size : %lu\n", block_size);
+            printf("Test file size : %lu\n", file_size);
+            printf("File system block size : %lu\n", block_size);
             printf("Number of blocks : %"PRIu64"\n", num_blocks);
         }
 
@@ -34,6 +43,7 @@ void file_read_time_sequential(const char* filename) {
             printf("ERROR while opening the file\n");
             exit(1);
         }
+
         // use POSIX_FADV_DONTNEED
         if (posix_fadvise(fd, 0, file_size, POSIX_FADV_DONTNEED) < 0) {
             printf("Setting POSIX flag failed\n");
@@ -43,10 +53,26 @@ void file_read_time_sequential(const char* filename) {
         char* data_buff = (char*) malloc (file_size);
 
         START_RDTSC(start);
+
+		/* Block is the read unit; each block is 4 KB.
+		 * 
+		 * If file size is larger than 4 KB, there is no difference between
+		 * calling read() only once with readsize set to file_size and 
+		 * calling read() for multiple times with readsize set to block_size.
+		 *
+		 * The first way could additionally avoid loop overhead 
+		 * 
+		 */
+		
+		read(fd, data_buff, file_size);
+
+		/*
         for (uint32_t j = 0; j < num_blocks; j++) {
             read(fd, data_buff, block_size);
         }
-        END_RDTSCP(end);
+		*/
+		
+		END_RDTSCP(end);
 
         readings[i] = (end - start);
 
@@ -54,11 +80,92 @@ void file_read_time_sequential(const char* filename) {
         free(data_buff);
     }
 
-    uint64_t total = 0;
+    uint64_t total_time = 0;
     for (uint64_t i = 0; i < loop_count; i++) {
-        total += readings[i];
+        total_time += readings[i];
     }
-    double avg = (double)total / (double)loop_count;
+    double avg = (double)total_time / (double)loop_count;
+    double time_ns = avg * 0.416;
+    printf("Average time for sequential read of the block %f ns\n", time_ns);
+
+}
+
+void file_read_time_sequential(const char* filename) {
+    uint64_t num_blocks, start, end;
+    size_t block_size;
+    blksize_t file_size;
+    uint32_t loop_count = 1000;
+    uint64_t readings[loop_count];
+    memset(readings, 0, loop_count);
+
+    for (int i = 0; i < loop_count; ++i) {
+        uint32_t fd = open(filename, O_RDONLY);
+        file_size = get_file_size(fd);
+        block_size = get_block_size(fd);
+		
+		if(block_size == 0) {
+			printf("block_size is 0, please check whether the file exists.");
+			exit(1);
+		}
+		
+		num_blocks = file_size / block_size;
+		if(num_blocks == 0) {
+			num_blocks = 1;
+		}
+
+        // Print stats first time
+        if (i == 0) {
+            printf("Test file size : %lu\n", file_size);
+            printf("File system block size : %lu\n", block_size);
+            printf("Number of blocks : %"PRIu64"\n", num_blocks);
+        }
+
+        if (fd < 0) {
+            printf("ERROR while opening the file\n");
+            exit(1);
+        }
+
+        // use POSIX_FADV_DONTNEED
+        if (posix_fadvise(fd, 0, file_size, POSIX_FADV_DONTNEED) < 0) {
+            printf("Setting POSIX flag failed\n");
+            exit(1);
+        }
+
+        char* data_buff = (char*) malloc (file_size);
+
+        START_RDTSC(start);
+
+		/* Block is the read unit; each block is 4 KB.
+		 * 
+		 * If file size is larger than 4 KB, there is no difference between
+		 * calling read() only once with readsize set to file_size and 
+		 * calling read() for multiple times with readsize set to block_size.
+		 *
+		 * The first way could additionally avoid loop overhead 
+		 * 
+		 */
+		
+		read(fd, data_buff, file_size);
+
+		/*
+        for (uint32_t j = 0; j < num_blocks; j++) {
+            read(fd, data_buff, block_size);
+        }
+		*/
+		
+		END_RDTSCP(end);
+
+        readings[i] = (end - start);
+
+        close(fd);
+        free(data_buff);
+    }
+
+    uint64_t total_time = 0;
+    for (uint64_t i = 0; i < loop_count; i++) {
+        total_time += readings[i];
+    }
+    double avg = (double)total_time / (double)loop_count;
     double time_ns = avg * 0.416;
     printf("Average time for sequential read of the block %f ns\n", time_ns);
 

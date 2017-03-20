@@ -8,10 +8,3 @@ cmake -H. -Bbuild
 
 # generate output program in folder build/bin
 cmake --build build -- -j3
-
-# generate the test files
-echo ""
-echo "start creating test files..."
-python generate_files.py
-echo "creation finished."
-echo ""
