@@ -15,7 +15,7 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 
 	uint64_t start, end, total_cycles;
 
-	// flush cache for each testing
+	// flush memory before each testing
 	system("echo 3 > /proc/sys/vm/drop_caches");
 	
 	// first read, load the file to memory 
