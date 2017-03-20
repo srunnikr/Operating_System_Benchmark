@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "utils.h"
 
 #define BLOCKSIZE	4096
 
@@ -50,7 +51,7 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 		}
 
 		// set POSIX_FADV_WILLNEED
-		if (posix_fadvise(fd, 0, file_size, POSIX_FADV_WILLNEED) < 0) {
+		if (posix_fadvise(fd, 0, read_size, POSIX_FADV_WILLNEED) < 0) {
 			printf("Setting POSIX flag failed\n");
 			exit(1);
 		}
@@ -69,7 +70,7 @@ double file_read_cache(const char* filename, uint64_t read_size) {
 	free(data_buff);
 
 	double avg_time = (double)total_time / (double)loop_count;
-	double time_ns = avg * 0.370;
+	double time_ns = avg_time * 0.370;
 //	double time_ns = avg * 0.416;
 
 	return time_ns;
@@ -99,7 +100,7 @@ int main(int argc, char const *argv[]) {
 		time_ns = file_read_cache(filename, read_size[i]);
 		total_blocks = read_size[i] / BLOCKSIZE;
 		time_per_block = time_ns / total_blocks;
-		read_size_MB = array_size[i] / (1024 * 1024);
+		read_size_MB = read_size[i] / (1024 * 1024);
 
 		printf("read size (MB): %"PRIu64", average time per block (ns): %f\n",
 				read_size_MB, time_per_block);
